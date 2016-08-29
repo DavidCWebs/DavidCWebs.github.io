@@ -1,0 +1,1845 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+        <title>Jekyll Bootstrap</title>
+        <description>Jekyll Bootstrap - David Egan</description>
+        <link>http://DavidCWebs.github.io</link>
+        <link>http://DavidCWebs.github.io</link>
+        <lastBuildDate>2016-08-28T16:46:42+01:00</lastBuildDate>
+        <pubDate>2016-08-28T16:46:42+01:00</pubDate>
+        <ttl>1800</ttl>
+
+
+        <item>
+                <title>New Laravel Model & Migration</title>
+                <description>&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://laraveldaily.com/how-to-create-migration-file-with-makemodel-command/&quot;&gt;Combined command for model &amp;amp; migration&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <link>http://DavidCWebs.github.io/2016/08/28/new-laravel-model-migration</link>
+                <guid>http://DavidCWebs.github.io/2016/08/28/new-laravel-model-migration</guid>
+                <pubDate>2016-08-28T11:52:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Set Up Database - Laravel</title>
+                <description>&lt;p&gt;These instructions are for local development of Laravel on Ubuntu 16.04 Xenial Xerus (Desktop). The instrauctions have been tested on 10.1.16-MariaDB, but they should also work for MySQL.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-database&quot;&gt;Create Database&lt;/h2&gt;
+&lt;p&gt;Create a Database with a unique user:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mysql -u root -p -e &lt;span class=&quot;s2&quot;&gt;&quot;create database database_name; GRANT ALL PRIVILEGES ON database_name.* TO user_name@localhost IDENTIFIED BY 'urehfh577hg5hrpefh7'&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;connect-laravel&quot;&gt;Connect Laravel&lt;/h2&gt;
+
+&lt;p&gt;Enter the Databse connection details in &lt;code class=&quot;highlighter-rouge&quot;&gt;.env&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;DB_CONNECTION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;mysql
+&lt;span class=&quot;nv&quot;&gt;DB_HOST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;127.0.0.1
+&lt;span class=&quot;nv&quot;&gt;DB_PORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3306
+&lt;span class=&quot;nv&quot;&gt;DB_DATABASE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;database_name
+&lt;span class=&quot;nv&quot;&gt;DB_USERNAME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;user_name
+&lt;span class=&quot;nv&quot;&gt;DB_PASSWORD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;urehfh577hg5hrpefh7&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;test-the-database&quot;&gt;Test the Database&lt;/h2&gt;
+&lt;p&gt;Laravel comes with a couple of migrations defined out of the box.&lt;/p&gt;
+
+&lt;p&gt;To check that Laravel is properly connected to the new database:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Open a mysql prompt, working on the new DB:&lt;/span&gt;
+mysql -u root -p database_name
+&lt;span class=&quot;c&quot;&gt;# Enter show tables:&lt;/span&gt;
+SHOW TABLES;
+&lt;span class=&quot;c&quot;&gt;# Returns Empty set (0.00 sec)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Open a new terminal and run the Laravel migrations:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;php artisan migrate&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This will run the default migrations (under Laravel 5.3, a “users” table and a “password_resets” table will be created, as well as a “migrations” table).&lt;/p&gt;
+
+&lt;p&gt;You can also seed the database. Create a seeder class:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;php artisan make:seeder UsersTableSeeder&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This will create &lt;code class=&quot;highlighter-rouge&quot;&gt;database/seeds/UsersTableSeeder.php&lt;/code&gt;, which will be stubbed out with an empty &lt;code class=&quot;highlighter-rouge&quot;&gt;run()&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;p&gt;This method can be used to insert records into the database. Laravel includes the handy &lt;code class=&quot;highlighter-rouge&quot;&gt;Faker&lt;/code&gt; factory class, which allows dummy data to be created.&lt;/p&gt;
+
+&lt;p&gt;To determine which fields to seed, check the table:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# At the mysql prompt:&lt;/span&gt;
+SHOW COLUMNS FROM users;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Next, amend the &lt;code class=&quot;highlighter-rouge&quot;&gt;run()&lt;/code&gt; method of the seeder class that you’ve just created:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$faker&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Faker\Factory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+          &lt;span class=&quot;nx&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'users'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'password'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;bcrypt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'secret'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$faker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'email'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$faker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;email&lt;/span&gt;
+
+          &lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now, when you run:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;php artisan db:seed --class&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;UsersTableSeeder&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;…the seeder will create 25 dummy users complete with realistic data.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; running &lt;code class=&quot;highlighter-rouge&quot;&gt;php artisan db:seed&lt;/code&gt; will only run the default &lt;code class=&quot;highlighter-rouge&quot;&gt;DatabaseSeeder&lt;/code&gt; class - which will be empty. This is a bit different to the &lt;code class=&quot;highlighter-rouge&quot;&gt;php artisan migrate&lt;/code&gt;  command, which runs all migrations under the &lt;code class=&quot;highlighter-rouge&quot;&gt;database/migrations&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;To check the seeder results, run the following command from the mysql prompt:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;SELECT &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; FROM users;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Note that Laravel has a much better way of interacting with your database on the fly - Artisan tinker:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Get the tinker prompt:&lt;/span&gt;
+php artisan tinker
+
+&lt;span class=&quot;c&quot;&gt;# Show all users:&lt;/span&gt;
+App&lt;span class=&quot;se&quot;&gt;\U&lt;/span&gt;ser::all&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;-&amp;gt;toArray&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+                <link>http://DavidCWebs.github.io/laravel/mysql/mariadb/2016/08/27/set-up-database-laravel</link>
+                <guid>http://DavidCWebs.github.io/laravel/mysql/mariadb/2016/08/27/set-up-database-laravel</guid>
+                <pubDate>2016-08-27T18:53:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Install Laravel on Ubuntu 16.04 Desktop</title>
+                <description>&lt;p&gt;This article describes how to get Laravel up and running in a Ubuntu Xenial Xerus development environment.&lt;/p&gt;
+
+&lt;p&gt;Minimum requirements for Laravel:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;PHP &amp;gt;= 5.6.4&lt;/li&gt;
+  &lt;li&gt;OpenSSL PHP Extension&lt;/li&gt;
+  &lt;li&gt;PDO PHP Extension&lt;/li&gt;
+  &lt;li&gt;Mbstring PHP Extension&lt;/li&gt;
+  &lt;li&gt;Tokenizer PHP Extension&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These notes describe installing Laravel on PHP 7 with MariaDB and Apache.&lt;/p&gt;
+
+&lt;h2 id=&quot;laravel-installer&quot;&gt;Laravel Installer&lt;/h2&gt;
+&lt;p&gt;Use Composer to download the Laravel installer. It will then be available globally:&lt;/p&gt;
+
+&lt;pre&gt;
+  &lt;code class=&quot;bash&quot;&gt;
+    composer global require &quot;laravel/installer&quot;
+  &lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;This will place the installer in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.composer/vendor/laravel/installer/&lt;/code&gt;, symlinked in &lt;code class=&quot;highlighter-rouge&quot;&gt;~/.composer/vendor/bin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This latter directory shoudl be in your &lt;code class=&quot;highlighter-rouge&quot;&gt;$PATH&lt;/code&gt; so that the &lt;code class=&quot;highlighter-rouge&quot;&gt;laravel&lt;/code&gt; installer can be located by the system. You may need to add the follwoing to your ~/.bashrc file:&lt;/p&gt;
+
+&lt;pre&gt;
+  &lt;code class=&quot;bash&quot;&gt;
+  # Add to ~/.bashrc for global access to Laravel installer
+  export PATH=$HOME/.composer/vendor/bin:$PATH
+  &lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;The Laravel installer calls the &lt;code class=&quot;highlighter-rouge&quot;&gt;Symfony\Component\Console\Application&lt;/code&gt; class to work it’s magic.&lt;/p&gt;
+
+&lt;h2 id=&quot;installing-laravel&quot;&gt;Installing Laravel&lt;/h2&gt;
+&lt;p&gt;The development site will be located in the Apache docroot - and the installer will install Laravel in the &lt;strong&gt;current directory&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;pre&gt;
+  &lt;code class=&quot;bash&quot;&gt;
+    cd /var/www/html
+    laravel new project-name
+  &lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Accessing &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/project-name/&lt;/code&gt; in a browser will display the app directory structure.&lt;/p&gt;
+
+&lt;h2 id=&quot;post-installation-permissions&quot;&gt;Post-Installation Permissions&lt;/h2&gt;
+&lt;p&gt;Assuming the Apache user is &lt;code class=&quot;highlighter-rouge&quot;&gt;www-data&lt;/code&gt;, the following ownership settings need to be applied:&lt;/p&gt;
+
+&lt;pre&gt;
+  &lt;code class=&quot;bash&quot;&gt;
+    # Move into the new project root
+    cd /var/www/html/project-name
+
+    # Apply ownership
+    sudo chown -R www-data storage
+    sudo chown -R www-data bootstrap/cache
+  &lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;h2 id=&quot;the-public-directory&quot;&gt;The Public Directory&lt;/h2&gt;
+&lt;p&gt;The front controller for Laravel is &lt;code class=&quot;highlighter-rouge&quot;&gt;public/index.php&lt;/code&gt; file - this is the file that all requests hit. The &lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt; directory will be the document root for the project.&lt;/p&gt;
+
+&lt;p&gt;If you’ve set permissions correctly, you should be able to access the new app:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost/project-name/public/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;It’s abit cumbersome to use this URL in the development environment. You could instead configure a virtual host directive for a suitable URL, and adjust your &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file so that your chosen domain directs to 127.0.0.1 (localhost).&lt;/p&gt;
+
+&lt;h2 id=&quot;post-install-checks&quot;&gt;Post Install Checks&lt;/h2&gt;
+&lt;p&gt;Check the 32 character application key in &lt;code class=&quot;highlighter-rouge&quot;&gt;.env&lt;/code&gt; has been set to a random string.&lt;/p&gt;
+</description>
+                <link>http://DavidCWebs.github.io/laravel/ubuntu/2016/08/27/install-laravel-on-ubuntu-16-04-desktop</link>
+                <guid>http://DavidCWebs.github.io/laravel/ubuntu/2016/08/27/install-laravel-on-ubuntu-16-04-desktop</guid>
+                <pubDate>2016-08-27T17:48:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Laravel Database Management</title>
+                <description>&lt;p&gt;This article focuses on Laravel development in a Ubuntu 16.04 desktop environment. It is assumed that a suitable database has already been created.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-a-database-table&quot;&gt;Create a Database Table&lt;/h2&gt;
+&lt;p&gt;The Laravel way involves creating and running a suitable “migration”. Migrations allow the app to create a new table or modify existing tables. Migrations are very powerful - amongst other things, they enable:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Version control of the database&lt;/li&gt;
+  &lt;li&gt;Database modifications to be easily rolled-back&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;create-migration&quot;&gt;Create Migration&lt;/h2&gt;
+&lt;p&gt;To create a migration:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;php artisan make:migration create_users_table&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This creates a stub in the &lt;code class=&quot;highlighter-rouge&quot;&gt;database\migrations&lt;/code&gt; directory. You can pre-fill the migration stub file with a specified table. It’s probably a good idea to name the migration descriptively in the imperative case - for example “create_xx_table”.&lt;/p&gt;
+
+&lt;p&gt;The following command sets up a migration that will create a database table called “stages”:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;php artisan make:migration create_stages_table --table&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;stages&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Once the migration has been created, it needs to be run to actually create the database table.&lt;/p&gt;
+
+&lt;p&gt;In this case, the migration class will be in  &lt;code class=&quot;highlighter-rouge&quot;&gt;database/migrations/2016_08_28_112319_create_stages_table.php&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Before running the migration and creating the new table, you’ll probably want to add some columns. You can do this by editing the &lt;code class=&quot;highlighter-rouge&quot;&gt;up()&lt;/code&gt; method on the newly created migration. For example, to add a simple title column:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;up&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;Schema&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'stages'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Blueprint&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$table&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nv&quot;&gt;$table&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;increments&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;nv&quot;&gt;$table&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'title'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;nv&quot;&gt;$table&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;timestamps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; you need to ensure that the additional table methods are added BEFORE the &lt;code class=&quot;highlighter-rouge&quot;&gt;timestamps()&lt;/code&gt; method or they won’t be applied.&lt;/p&gt;
+
+&lt;h2 id=&quot;run-or-rollback-migration&quot;&gt;Run or Rollback Migration&lt;/h2&gt;
+
+&lt;p&gt;To apply the changes to the database, you need to run the migration:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;php artisan migrate&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;To rollback a migration:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;php artisan migrate:rollback&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;See: &lt;a href=&quot;https://laravel.com/docs/5.2/migrations#generating-migrations&quot;&gt;https://laravel.com/docs/5.2/migrations#generating-migrations&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;rollback-problems&quot;&gt;Rollback Problems&lt;/h2&gt;
+
+&lt;p&gt;When attempting a rollback for the first time you may experience this error:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;PHP Fatal error:  Uncaught UnexpectedValueException:
+The stream or file &lt;span class=&quot;s2&quot;&gt;&quot;/var/www/html/test-laravel/storage/logs/laravel.log&quot;&lt;/span&gt;
+could not be opened: failed to open stream:
+Permission denied &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; /var/www/html/test-laravel/vendor
+/monolog/monolog/src/Monolog/Handler/StreamHandler.php:107&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This occurs because you’re running the rollback command as your current user. The &lt;code class=&quot;highlighter-rouge&quot;&gt;storage&lt;/code&gt; directory will be owned by the server user (www-data in the case of Ubuntu), and will probably belong to your main user’s group (depending upon how you assigned permissions when you first installed the app).&lt;/p&gt;
+
+&lt;p&gt;The fix is simple - &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod&lt;/code&gt; the log file to give your user write permissions. The file will probably have &lt;code class=&quot;highlighter-rouge&quot;&gt;-rw--r--r--&lt;/code&gt; permissions, so change these to 664:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo chmod 664 /var/www/html/test-laravel/storage/logs/laravel.log&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;seeding-a-table&quot;&gt;Seeding a Table&lt;/h2&gt;
+&lt;p&gt;Laravel 5.2 ships with the &lt;code class=&quot;highlighter-rouge&quot;&gt;Faker&lt;/code&gt; Factory, which can be used to “seed” the database.&lt;/p&gt;
+
+&lt;p&gt;Create a seeder stub for the ‘stages’ table:&lt;/p&gt;
+
+&lt;pre&gt;
+  &lt;code class=&quot;bash&quot;&gt;
+    php artisan make:seeder StagesTableSeeder
+  &lt;/code&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;This stubs out a &lt;code class=&quot;highlighter-rouge&quot;&gt;StagesTableSeeder&lt;/code&gt; class in &lt;code class=&quot;highlighter-rouge&quot;&gt;database/seeds/StagesTableSeeder.php&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Example Seeder:&lt;/p&gt;
+
+&lt;pre&gt;
+  &lt;code class=&quot;php&quot;&gt;
+  ```
+  &amp;lt;?php
+
+  use Illuminate\Database\Seeder;
+
+  class UsersTableSeeder extends Seeder
+  {
+      /**
+       * Run the database seeds.
+       *
+       * @return void
+       */
+      public function run()
+      {
+          $faker = Faker\Factory::create();
+
+          for($i = 0; $i &amp;lt; 100; $i++) {
+            DB::table('users')-&amp;gt;insert([
+                'password' =&amp;gt; bcrypt('secret'),
+                'name' =&amp;gt; $faker-&amp;gt;name,
+                'email' =&amp;gt; $faker-&amp;gt;email
+            ]);
+          }
+      }
+  }
+  ```
+  &lt;/code&gt;
+&lt;/pre&gt;
+</description>
+                <link>http://DavidCWebs.github.io/laravel/mysql/mariadb/2016/08/27/laravel-database-management</link>
+                <guid>http://DavidCWebs.github.io/laravel/mysql/mariadb/2016/08/27/laravel-database-management</guid>
+                <pubDate>2016-08-27T16:28:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Moving a Site to a New Domain - Apache Redirects/Rewrites</title>
+                <description>&lt;p&gt;When moving a site to a new domain, it’s important to redirect visitors to the new domain. This provides a courtesy to your users, helps retain search engine ranking, and prevents broken links to your site.&lt;/p&gt;
+
+&lt;p&gt;Apache provides several methods for redirecting requests and this article documents several approaches.&lt;/p&gt;
+
+&lt;p&gt;The rules should be tested properly before applying them. In our case, we set up a virtual machine with cloned versions of both new and old sites (with an appropriately modified hosts file) to allow full testing of all redirects.&lt;/p&gt;
+
+&lt;h2 id=&quot;context&quot;&gt;Context&lt;/h2&gt;
+&lt;p&gt;This article refers to a site that is being moved to a new domain as part of a re-branding exercise.&lt;/p&gt;
+
+&lt;p&gt;The site structure will remain broadly the same, but for two quite important differences. The old site permalink structure for the ‘projects’ and ‘people’ index pages is:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;http://olddomain/category/people/&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;http://olddomain/category/projects/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;On the new site, these index pages will be located at the following URLs:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;http://newdomain/people/&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;http://newdomain/projects/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In addition, project categories (a custom taxonomy) are to be rationalised as part of the move/rebuild. The old URL structure involved having ‘projects’ as a category, with projects further grouped into sub-categories. For the new site, these sub-categories have been mapped into a more logical ‘project-category’ structure.&lt;/p&gt;
+
+&lt;p&gt;The resource found on the old domain at &lt;code class=&quot;highlighter-rouge&quot;&gt;http://olddomain/category/projects/term/&lt;/code&gt; should be available at &lt;code class=&quot;highlighter-rouge&quot;&gt;http://newdomain/project-category/term/&lt;/code&gt; on the new domain.&lt;/p&gt;
+
+&lt;h2 id=&quot;approach&quot;&gt;Approach&lt;/h2&gt;
+&lt;p&gt;The redirects can be achieved with a combination of Redirect and Rewrite rules, or Rewrite rules only. Rules can be added on a Directory basis (either &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; or in a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Directory&amp;gt;&lt;/code&gt; block in the vHost config).&lt;/p&gt;
+
+&lt;p&gt;A better approach would probably be to include all necessary rewrite rules outside a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Directory&amp;gt;&lt;/code&gt; block within the vHost configuration. This allows the redirect to happen without even the presence of a directory corresponding to the old domain - so when the move is complete, the old site can be collapsed completely.&lt;/p&gt;
+
+&lt;h2 id=&quot;per-directory-rules-htaccess&quot;&gt;Per-Directory Rules: &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;These rules are added to a &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file in the root directory of the old site.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-apache&quot; data-lang=&quot;apache&quot;&gt;&lt;span class=&quot;nc&quot;&gt;Redirect&lt;/span&gt; 301 /category/people/ http://newdomain.com/people/
+&lt;span class=&quot;nc&quot;&gt;Redirect&lt;/span&gt; 301 /category/projects/ http://newdomain.com/projects/
+
+&lt;span class=&quot;nc&quot;&gt;RewriteEngine&lt;/span&gt; On
+&lt;span class=&quot;nc&quot;&gt;RewriteBase&lt;/span&gt; /
+&lt;span class=&quot;nc&quot;&gt;RewriteCond&lt;/span&gt; %{HTTP_HOST} !newdomain.com$ [NC]
+&lt;span class=&quot;nc&quot;&gt;RewriteCond&lt;/span&gt; %{REQUEST_URI} !^/category/people/$ [NC]
+&lt;span class=&quot;nc&quot;&gt;RewriteCond&lt;/span&gt; %{REQUEST_URI} !^/category/projects/$ [NC]
+&lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(category/projects/)(.*)$ http://newdomain.com/project-category/$2
+&lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(.*)$ http://newdomain.com/$1 [L,R=301]&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Alternatively, the rewrite engine only could be used:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-apache&quot; data-lang=&quot;apache&quot;&gt;&lt;span class=&quot;nc&quot;&gt;RewriteEngine&lt;/span&gt; On
+&lt;span class=&quot;nc&quot;&gt;Options&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;FollowSymLinks&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;RewriteBase&lt;/span&gt; /
+&lt;span class=&quot;nc&quot;&gt;RewriteCond&lt;/span&gt; %{HTTP_HOST} !newdomain.com$ [NC]
+&lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(category/people/)$ http://newdomain.com/people/ [L,R=301]
+&lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(category/projects/)$ http://newdomain.com/projects/ [L,R=301]
+&lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(category/projects/)(.*)$ http://newdomain.com/project-category/$2 [L,R=301]
+&lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(.*)$ http://newdomain.com/$1 [L,R=301]&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Note that the first string to be matched should not have a leading slash. This is because in the directory context (within either a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Directory&amp;gt;&lt;/code&gt; block or a per-directory &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file) the removed prefix always ends with a slash - so a Pattern with &lt;code class=&quot;highlighter-rouge&quot;&gt;^/&lt;/code&gt; never matches in the per-directory context.&lt;/p&gt;
+
+&lt;p&gt;Bracketed sections of the source string are available as indexed variables in the destination string:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-apache&quot; data-lang=&quot;apache&quot;&gt;&lt;span class=&quot;err&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Rewrite http://olddomain.com/first-string/second-string/...&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ...to http://newdomain/second-string:&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(first-string/)(second-string)$ http://newdomain/$2`&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt; for testing purposes, you should designate these rules as “302” - a temporary redirect. These should be amended to “301” to denote a permanent redirect when you deploy the rules to the production server.&lt;/p&gt;
+
+&lt;p&gt;These rules could be placed in either a &lt;code class=&quot;highlighter-rouge&quot;&gt;.htaccess&lt;/code&gt; file in the olddomain.com document root or a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Directory&amp;gt;&lt;/code&gt; block in the site virtual host configuration file for the old site (e.g. &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/apache2/sites-available/olddomain.com.conf&lt;/code&gt;). If adding the rules to an Apache config file, you’ll need to restart Apache for the rules to take effect.&lt;/p&gt;
+
+&lt;h2 id=&quot;simple-vhost-redirect&quot;&gt;Simple vHost Redirect&lt;/h2&gt;
+&lt;p&gt;This block added to the virtual host configuration of the &lt;strong&gt;old&lt;/strong&gt; site provides a one-to-one mapping of the old domain to the new. If the site retains the exact same permalinks (apart from the domain of course), this might be an adequate solution. Note that a &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;Directory&amp;gt;&lt;/code&gt; block is not necessary:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-apache&quot; data-lang=&quot;apache&quot;&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; *:80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;
+&lt;/span&gt;        &lt;span class=&quot;nc&quot;&gt;ServerName&lt;/span&gt; oldsite.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAlias&lt;/span&gt; www.oldsite.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAdmin&lt;/span&gt; info@olddomain.com
+
+        &lt;span class=&quot;nc&quot;&gt;Redirect&lt;/span&gt; 301 / http://newdomain.com
+
+        &lt;span class=&quot;nc&quot;&gt;ErrorLog&lt;/span&gt; ${APACHE_LOG_DIR}/oldsite.com.error.log
+        &lt;span class=&quot;nc&quot;&gt;CustomLog&lt;/span&gt; ${APACHE_LOG_DIR}/oldsite.com.access.log combined
+&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This kind of simple redirect isn’t going to work in our case, because the structure of some of our URLs will be altered.&lt;/p&gt;
+
+&lt;h2 id=&quot;complete-vhost-redirect&quot;&gt;Complete vHost Redirect&lt;/h2&gt;
+&lt;p&gt;Here’s the final virtual host config file solution:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-apache&quot; data-lang=&quot;apache&quot;&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; *:80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;
+&lt;/span&gt;        &lt;span class=&quot;nc&quot;&gt;ServerName&lt;/span&gt; olddomain.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAlias&lt;/span&gt; www.olddomain.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAdmin&lt;/span&gt; info@olddomain.com
+        &lt;span class=&quot;nc&quot;&gt;RewriteEngine&lt;/span&gt; On
+        &lt;span class=&quot;nc&quot;&gt;RewriteCond&lt;/span&gt; %{HTTP_HOST} !newdomain.com$ [NC]
+        &lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(/category/people/)$ http://newdomain.com/people/ [L,R=301]
+        &lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(/category/projects/)$ http://newdomain.com/projects/ [L,R=301]
+        &lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(/category/projects/)(.*)$ http://newdomain.com/project-category/$2 [L,R=301]
+        &lt;span class=&quot;nc&quot;&gt;RewriteRule&lt;/span&gt; ^(.*)$ http://newdomain.com/$1 [L,R=301]
+&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Don’t forget to restart Apache for the rewrite rules to take effect.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewriterule&quot;&gt;Apache 2.4 docs on mod_rewrite&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.linode.com/docs/websites/apache-tips-and-tricks/redirect-urls-with-the-apache-web-server/&quot;&gt;Linode Guide on redirects&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.inmotionhosting.com/support/website/redirects/setting-up-a-301-permanent-redirect-via-htaccess&quot;&gt;Setting up 301 redirects via .htaccess&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://tltech.com/info/rewriterule-in-htaccess-vs-httpd-conf/&quot;&gt;.htaccess and Directory block level Rewrite Rules&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <link>http://DavidCWebs.github.io/server/2016/08/26/moving-a-site-to-a-new-domain</link>
+                <guid>http://DavidCWebs.github.io/server/2016/08/26/moving-a-site-to-a-new-domain</guid>
+                <pubDate>2016-08-26T15:45:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Page Sections in Jekyll - Seperating Content from Layout</title>
+                <description>&lt;p&gt;It’s usually considered good practice to keep content separate from logic and layout. I think this is especially important with static site generators like Jekyll, where it’s easy to mix content and layout.&lt;/p&gt;
+
+&lt;p&gt;Achieving separation is pretty straightforward with single page/post/collection views - just define a custom template and inject the content from a markdown file (from yaml frontmatter and the main content field).&lt;/p&gt;
+
+&lt;p&gt;But what about displaying section content in a single page context? This is a common requirement for landing pages, home pages and single page sites.&lt;/p&gt;
+
+&lt;p&gt;Ideally, all content - including text, background image, foreground image etc should be controlled in the content markdown file. I’d go a step further and suggest that some style elements should also be controllable here - for example, if you add a background image which results in poor text/background contrast, you should be able to set the image overlay opacity in the same location that you’re setting the image.&lt;/p&gt;
+
+&lt;h2 id=&quot;define-collections&quot;&gt;Define Collections&lt;/h2&gt;
+&lt;p&gt;Jekyll collections are an ideal candidate for managing repeating content that is not naturally date ordered.&lt;/p&gt;
+
+&lt;p&gt;Our use case here is for a very simple site, and our section content will be grouped using a jekyll collection that we’ll call “sections”.&lt;/p&gt;
+
+&lt;p&gt;To begin, define the site collections in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;s&quot;&gt;collections&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sections&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Then create a directory called &lt;code class=&quot;highlighter-rouge&quot;&gt;_sections&lt;/code&gt; in the project root. This directory will contain section files, stored in markdown format.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-index-page&quot;&gt;The Index Page&lt;/h2&gt;
+
+&lt;p&gt;Iterating through the sections in &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; looks like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-liquid&quot; data-lang=&quot;liquid&quot;&gt;&lt;span class=&quot;p&quot;&gt;{%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;assign&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sections&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sections&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'order'&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;section&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;in&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;sections&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;{%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;{{&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;include }} %}
+  {% else %}
+    {% include sections/default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;html&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;{%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kr&quot;&gt;endif&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;endfor&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;%}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This does the following:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Assign a ‘sections’ object, by iterating through site sections (i.e. the &lt;code class=&quot;highlighter-rouge&quot;&gt;_sections/*.md&lt;/code&gt; files) and ordering by the “order” attribute (which is set in the section front matter)&lt;/li&gt;
+  &lt;li&gt;Loop through these objects - for each one, if there is a specified include (again, set in the section frontmatter) then call it&lt;/li&gt;
+  &lt;li&gt;If no include is specified in the section, call a default include as a fallback&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;the-includes&quot;&gt;The Includes&lt;/h2&gt;
+
+&lt;p&gt;In our case we store includes under &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes/sections&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The includes are &lt;code class=&quot;highlighter-rouge&quot;&gt;html&lt;/code&gt; files that have the section content injected. This include shows how:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Inline style is included as defined by the section yaml frontmatter&lt;/li&gt;
+  &lt;li&gt;Section content is injected into the section layout&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;{% capture bg-image-style %}
+ style=&quot;background:{% if section.bg-opaque-overlay != nil %} linear-gradient(
+    {{ section.bg-opaque-overlay }},
+    {{ section.bg-opaque-overlay }}
+  ),{% endif %} {% if section.bg_image != nil %}url('{{ section.bg_image }}') center center fixed; background-size: cover;{% endif %}&quot;
+{% endcapture %}
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;{{ section.title | slugify }}&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;content-section&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;bg-image-style&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;}}&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;row&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;col-md-12&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;{{ section.title }}&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+      {{ section.content }}
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;In this case the style rule builds in a background image with an opaque overlay.&lt;/p&gt;
+
+&lt;p&gt;Obviously you can define as many layout includes as your project needs.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-content&quot;&gt;The Content&lt;/h2&gt;
+&lt;p&gt;Content is held as a collection markdown file stored in the &lt;code class=&quot;highlighter-rouge&quot;&gt;/_sections&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;For example, this is &lt;code class=&quot;highlighter-rouge&quot;&gt;_sections/about.md&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-markdown&quot; data-lang=&quot;markdown&quot;&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;About&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;path/to/img&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Set the display order for this section&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;order&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Specify the layout for this section&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;include&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sections/two-column.html&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Set style variables&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;bg-opaque-overlay&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;rgba(0,200,0,0.3)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;bg_image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;http://loremflickr.com/2000/600/robot&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+&lt;span class=&quot;gu&quot;&gt;### Ut enim ad minim veniam&lt;/span&gt;
+
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+Duis aute irure dolor in reprehenderit in voluptate velit...&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I like this method because content editing on the site is very simple, and site editors can have quite a few options available in the content markdown file. It also breaks apart the layout/HTML which I think makes projects more maintainable.&lt;/p&gt;
+
+&lt;p&gt;There are probably better ways of organising section content - if you know of any, please leave a comment!&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://jekyllrb.com/docs/collections/&quot;&gt;Jekyll docs on Collections&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://ben.balter.com/2015/02/20/jekyll-collections/&quot;&gt;Ben Balter on Jekyll Collections&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://jekyll.tips/jekyll-casts/introduction-to-collections/&quot;&gt;Jekyll Casts on Jekyll Collections&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <link>http://DavidCWebs.github.io/jekyll/liquid/2016/08/10/page-sections-in-jekyll-seperating-content-from-layout</link>
+                <guid>http://DavidCWebs.github.io/jekyll/liquid/2016/08/10/page-sections-in-jekyll-seperating-content-from-layout</guid>
+                <pubDate>2016-08-10T19:23:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Secure rsync Between Servers</title>
+                <description>&lt;p&gt;This method allows for automatic incremental backups between servers.&lt;/p&gt;
+
+&lt;h2 id=&quot;backup-server-pulls-from-production-server&quot;&gt;Backup Server Pulls from Production Server&lt;/h2&gt;
+&lt;p&gt;Either server could initiate the sync - but if Production initiates, it would need write access to the Backup server. It is probably safest to give the Backup server read access to the Production server, so this guide assumes that the Backup machine initiates the sync.&lt;/p&gt;
+
+&lt;p&gt;The files to be synced have been built by a local automatic rsync-based incremental backup script that runs on the Production server. This is because:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;There is enough space on the Production machine (approx 8G out of 40G is in use)&lt;/li&gt;
+  &lt;li&gt;Having an incremental backup on the Production server allows for quick restores in the event of non-catastrophic failure&lt;/li&gt;
+  &lt;li&gt;Having backups on the production server is “belt and braces” - backups are stored in multiple locations&lt;/li&gt;
+  &lt;li&gt;The script has root access and can build a complete set of backup files: /var/www/html/, Apache config files, MySQL config files, Database files (built by mysqldump)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This method uses the &lt;code class=&quot;highlighter-rouge&quot;&gt;rrsync&lt;/code&gt; perl script (restricted rsync) to restrict rsync to a subdirectory declared in .ssh/authorized_keys. This works really well since our local incremental backup has written all the files we need to a single backup directory.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-a-backup-user-on-the-production-server&quot;&gt;Set up a Backup User on the Production Server&lt;/h2&gt;
+&lt;p&gt;Set up a user without sudo privileges. This user is only going to be used to store backups - which provides another level of security.&lt;/p&gt;
+
+&lt;p&gt;The backup user home directory will receive incremental backups, and hold the SSH public key to allow the remote backup server to connect - and that’s about it.&lt;/p&gt;
+
+&lt;h2 id=&quot;set-up-an-ssh-key-pair-on-the-backup-server&quot;&gt;Set up an SSH Key Pair on the Backup Server&lt;/h2&gt;
+&lt;p&gt;Because the backup script is designed to be triggered automatically by a cron job, the user that will be running the rsync command on the production server will be root.&lt;/p&gt;
+
+&lt;p&gt;It is therefore important to transfer the public SSH key for &lt;strong&gt;the root user&lt;/strong&gt; to the backup target machine.&lt;/p&gt;
+
+&lt;p&gt;In addition, the SSH key should NOT have a passphrase, so that connection can be made automatically. We will also limit the actions that can be carried out by this SSH connection.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Switch to root&lt;/span&gt;
+su root
+
+&lt;span class=&quot;c&quot;&gt;# Generate an SSH key pair, WITHOUT a passphrase&lt;/span&gt;
+ssh-keygen -t rsa
+
+&lt;span class=&quot;c&quot;&gt;# copy the public key to the backupuser account on the target Production machine&lt;/span&gt;
+ssh-copy-id -p 1234 backupuser@123.456.789.0&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;failure-to-copy-public-key&quot;&gt;Failure to Copy Public Key&lt;/h2&gt;
+&lt;p&gt;If the public key doesn’t copy across, you’ll see an error message like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;/usr/bin/ssh-copy-id: INFO: attempting to log &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;with the new key&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; remain to be installed -- &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;you are prompted now it is to install the new keys
+Permission denied &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;publickey&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This means that the remote server has refused the connection.&lt;/p&gt;
+
+&lt;p&gt;In my case, this is because I usually set up servers such that access is via SSH key only - with password authentication disabled.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;To copy a public SSH key to a remote server, password SSH login must be enabled on the remote server&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;To enable password login:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SSH into the remote server&lt;/li&gt;
+  &lt;li&gt;Configure SSH: &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo nano /etc/ssh/sshd_config&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Edit to allow password authentication: &lt;code class=&quot;highlighter-rouge&quot;&gt;PasswordAuthentication yes&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Save &amp;amp; exit, then reload the SSH server: &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo reload ssh&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Once the key has been copied across (which will require password entry for the relevant user), test SSH access (as prompted). If it works, you can safely disable password login on the remote machine.&lt;/p&gt;
+
+&lt;h2 id=&quot;limit-actions-for-this-ssh-connection-to-restricted-rsync&quot;&gt;Limit Actions for this SSH Connection to Restricted rsync&lt;/h2&gt;
+&lt;p&gt;Using an SSH key without a passphrase makes it possible to automate remote tasks - a user-entered passphrase is not required for key decryption.&lt;/p&gt;
+
+&lt;p&gt;Automation of backup tasks is essential - if backup relies on human intervention, sooner or later it will get missed or messed up. However, using SSH keys without a passphrase is a security risk - is someone had access to the backup server, they would be easily able to access the remote Production server.&lt;/p&gt;
+
+&lt;p&gt;To prevent this, SSH allows restriction of the commands that can be executed by a specific set of keys. This is accomplished by editing the &lt;code class=&quot;highlighter-rouge&quot;&gt;/home/backupuser/.ssh/authorized_keys&lt;/code&gt; file for the backup user on the Production server.&lt;/p&gt;
+
+&lt;p&gt;A script called rrsync (which stands for restricted rsync) is provided with rsync specifically to ease the restricting keys to be used only for rsync via .ssh/authorized_keys.&lt;/p&gt;
+
+&lt;p&gt;On Ubuntu, the script is located here: &lt;code class=&quot;highlighter-rouge&quot;&gt;/usr/share/doc/rsync/scripts/rrsync.gz&lt;/code&gt;. The script needs to be unzipped and installed under &lt;code class=&quot;highlighter-rouge&quot;&gt;user/local/bin&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Copy the archive rrsync script to /usr/local/bin&lt;/span&gt;
+sudo cp /usr/share/doc/rsync/scripts/rrsync.gz  /usr/local/bin/
+
+&lt;span class=&quot;c&quot;&gt;# Unzip the script&lt;/span&gt;
+sudo gzip -d   /usr/local/bin/rrsync.gz
+
+&lt;span class=&quot;c&quot;&gt;# Give it correct permissions&lt;/span&gt;
+sudo chmod 755 /usr/local/bin/rrsync&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Once &lt;code class=&quot;highlighter-rouge&quot;&gt;rrsync&lt;/code&gt; is in place, we can lock down access for our SSH key by amending the &lt;code class=&quot;highlighter-rouge&quot;&gt;/home/backupuser/.ssh/authorized_keys&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;Open the public key for the backup user on the Production Server. This will constitute a single line of text:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo nano /home/backupuser/.ssh/authorized_keys&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Prepend the following:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/usr/local/bin/rrsync -ro /home/path-to/backup/&quot;&lt;/span&gt;,no-agent-forwarding,no-port-forwarding,no-pty,no-user-rc,no-X11-forwarding&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;command=&quot;/usr/local/bin/rrsync ...&quot;&lt;/code&gt; restricts access of that particular public key - only the given command can be executed&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;...-ro /home/path-to/backup/&quot;&lt;/code&gt; gives &lt;strong&gt;read-only&lt;/strong&gt; access to the specified directory&lt;/li&gt;
+  &lt;li&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;no-*&lt;/code&gt; options further restrict what actions can be carried out with the public key.&lt;/li&gt;
+  &lt;li&gt;Note that the full path is need to reference rrsync&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you try and SSH into the Production machine from the Backup server you should now see a message like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;PTY allocation request failed on channel 0
+/usr/local/bin/rrsync: Not invoked via sshd
+Use &lt;span class=&quot;s1&quot;&gt;'command=&quot;/usr/local/bin/rrsync [-ro] SUBDIR&quot;'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;front of lines &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; /home/backupuser/.ssh/authorized_keys
+Connection to 123.45.67.89 closed.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;command-rsync-from--backup-server&quot;&gt;Command rsync from  Backup Server&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; After the above amendment to the &lt;code class=&quot;highlighter-rouge&quot;&gt;authorized_keys&lt;/code&gt; file, the final path from the Backup servers point of view is now “/”:&lt;/p&gt;
+
+&lt;p&gt;Sample rsync command from the Backup server:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;rsync --log-file&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.rsyncd.log --progress -az -H -e &lt;span class=&quot;s2&quot;&gt;&quot;ssh -p 1234&quot;&lt;/span&gt; backupuser@123.456.789.0:/ ~/backup-target-directory&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This specifies:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;-a: archive mode; equals -rlptgoD (no -H,-A,-X)&lt;/li&gt;
+  &lt;li&gt;-z: Compress file data during the transfer&lt;/li&gt;
+  &lt;li&gt;-H: Maintain hardlinks (important due to our incremental backup)&lt;/li&gt;
+  &lt;li&gt;-e “ssh -p 1234”: connect via SSH on port 1234&lt;/li&gt;
+  &lt;li&gt;See &lt;a href=&quot;http://linux.die.net/man/1/rsync&quot;&gt;rsync man&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is a more comprehensive script that sends an email with success/fail messages. This could be added to a nightly cronjob. It would be better if it looped through the servers:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Collect all of the backups!&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Server 1 Backup&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ------------------------------------------------------------------------------&lt;/span&gt;
+rsync -aqz -H -e &lt;span class=&quot;s2&quot;&gt;&quot;ssh -p 22222&quot;&lt;/span&gt; backupuser@111.111.111.111:/ /home/david/server-1 2&amp;gt; /home/david/server-1-rsync.err
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt; -gt 0 &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# Server 1 errors&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# ----------------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;SERVER_1_MSG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false
+    echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;There was an error in the nightly backup for Server 1 to the backup server: &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;| mail -s &lt;span class=&quot;s2&quot;&gt;&quot;Backup Error, Server 1 to Backup&quot;&lt;/span&gt; info@example.com
+
+  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# Server 1 success&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# --------------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;SERVER_1_MSG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rsync was successful for Server 1&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Server 2 Backup&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# ------------------------------------------------------------------------------&lt;/span&gt;
+rsync -aqz -H -e &lt;span class=&quot;s2&quot;&gt;&quot;ssh -p 22222&quot;&lt;/span&gt; backupuser@222.222.222.222:/ /home/david/server-2 2&amp;gt; /home/david/server-2-rsync.err
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt; -gt 0 &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# Server 2 errors&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# ----------------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;SERVER_2_MSG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false
+    echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;There was an error in the nightly backup for Server 2 to the backup server: &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;| mail -s &lt;span class=&quot;s2&quot;&gt;&quot;Backup Error, Server 2 to Backup&quot;&lt;/span&gt; info@example.com
+
+  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;# Server 2 success&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# --------------------------------------------------------------------------&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;SERVER_2_MSG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rsync was successful for Server 2&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;fi
+
+
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;REPORT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Backup Report, &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TIMESTAMP&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+===========================================
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SERVER_1_MSG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SERVER_2_MSG&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;
+&quot;&lt;/span&gt;
+
+&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$REPORT&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;| mail -s &lt;span class=&quot;s2&quot;&gt;&quot;Backup Status&quot;&lt;/span&gt; info@example.com&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;problems-with-permissions&quot;&gt;Problems with Permissions&lt;/h2&gt;
+&lt;p&gt;Some files that you’re backing up may have restrictive permissions. For example, permissions on WordPress configuration file (&lt;code class=&quot;highlighter-rouge&quot;&gt;wp-config.php&lt;/code&gt;) may be set to 660 - read/write for owner, read/write for group, and no privilege for others. Most files will have permission set to 644.&lt;/p&gt;
+
+&lt;p&gt;Because your backup server is logging in as the backup user on the production server, it won’t have read privilege on the files with 660 permission. Trying to rsync these will result in a permission error.&lt;/p&gt;
+
+&lt;p&gt;To prevent this, add the &lt;strong&gt;production server’s&lt;/strong&gt; backup user to the file’s group - typically &lt;code class=&quot;highlighter-rouge&quot;&gt;www-data&lt;/code&gt;:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Production server: server that is being backed up&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Add backup user to the group&lt;/span&gt;
+usermod -a -G www-data backupuser&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This will allow the backup server to log in as the backup user and copy files.&lt;/p&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.guyrutenberg.com/2014/01/14/restricting-ssh-access-to-rsync/&quot;&gt;http://www.guyrutenberg.com/2014/01/14/restricting-ssh-access-to-rsync/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.debian-administration.org/users/lee/weblog/40&quot;&gt;https://www.debian-administration.org/users/lee/weblog/40&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://positon.org/rsync-command-restriction-over-ssh&quot;&gt;http://positon.org/rsync-command-restriction-over-ssh&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://surniaulula.com/2014/02/21/force-rsync-command-via-ssh-but-allow-any-directory/&quot;&gt;http://surniaulula.com/2014/02/21/force-rsync-command-via-ssh-but-allow-any-directory/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://ramblings.narrabilis.com/using-rsync-with-ssh&quot;&gt;http://ramblings.narrabilis.com/using-rsync-with-ssh&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <link>http://DavidCWebs.github.io/linux/backup/rsync/2016/08/10/secure-rsync-between-servers</link>
+                <guid>http://DavidCWebs.github.io/linux/backup/rsync/2016/08/10/secure-rsync-between-servers</guid>
+                <pubDate>2016-08-10T12:40:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Export MySQL Users</title>
+                <description>&lt;p&gt;Build a SQL command that can be used to reconstruct MySQL users - useful for migrating servers, or building a verification check server for backups.&lt;/p&gt;
+
+&lt;p&gt;Run this command on the source server:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Replace PASS with your root password for MySQL&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;MYSQL_CONN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;-uroot -pPASS&quot;&lt;/span&gt;
+
+mysql &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MYSQL_CONN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; --skip-column-names -A -e &lt;span class=&quot;s2&quot;&gt;&quot;SELECT CONCAT('SHOW GRANTS FOR ''',user,'''@''',host,''';') AS query FROM mysql.user WHERE user NOT IN ('root','pma','phpmyadmin','debian-sys-maint')&quot;&lt;/span&gt; | mysql &lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;MYSQL_CONN&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt; --skip-column-names -A | sed &lt;span class=&quot;s1&quot;&gt;'s/$/;/g'&lt;/span&gt; &amp;gt; ~/MySQLUserGrants.sql&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;See: &lt;a href=&quot;http://serverfault.com/a/399875&quot;&gt;http://serverfault.com/a/399875&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Output:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;GRANT USAGE ON &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; TO &lt;span class=&quot;s1&quot;&gt;'xyz_user'&lt;/span&gt;@&lt;span class=&quot;s1&quot;&gt;'localhost'&lt;/span&gt; IDENTIFIED BY PASSWORD &lt;span class=&quot;s1&quot;&gt;'*rehoorufiuhrfourur8'&lt;/span&gt;;
+GRANT ALL PRIVILEGES ON &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;xyz&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; TO &lt;span class=&quot;s1&quot;&gt;'xyz_user'&lt;/span&gt;@&lt;span class=&quot;s1&quot;&gt;'localhost'&lt;/span&gt;;
+GRANT SELECT, RELOAD, REPLICATION CLIENT, SHOW VIEW, EVENT, TRIGGER ON &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; TO &lt;span class=&quot;s1&quot;&gt;'backup_user'&lt;/span&gt;@&lt;span class=&quot;s1&quot;&gt;'localhost'&lt;/span&gt; IDENTIFIED BY PASSWORD &lt;span class=&quot;s1&quot;&gt;'yguirfuiyrfurfygufr'&lt;/span&gt;;
+GRANT USAGE ON &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; TO &lt;span class=&quot;s1&quot;&gt;'abc_user'&lt;/span&gt;@&lt;span class=&quot;s1&quot;&gt;'localhost'&lt;/span&gt; IDENTIFIED BY PASSWORD &lt;span class=&quot;s1&quot;&gt;'*yguguyrfeguirefgiuryfegu'&lt;/span&gt;;
+GRANT ALL PRIVILEGES ON &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;abc&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; TO &lt;span class=&quot;s1&quot;&gt;'abc_user'&lt;/span&gt;@&lt;span class=&quot;s1&quot;&gt;'localhost'&lt;/span&gt;;
+...&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This is a set of valid SQL commands that can be run on the destination server to create the necessary users. You can then import files, import databases, adjust &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; if necessary and the migrated sites should work.&lt;/p&gt;
+
+&lt;h2 id=&quot;find-all-users-for-a-database&quot;&gt;Find All Users for a Database&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Log in as mysql root user&lt;/span&gt;
+mysql -u root -p
+SELECT USER FROM mysql.db WHERE &lt;span class=&quot;nv&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'DB_NAME'&lt;/span&gt;;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://serverfault.com/questions/8860/how-can-i-export-the-privileges-from-mysql-and-then-import-to-a-new-server&quot;&gt;Export privileges from mysql and then import to a new server&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://serverfault.com/a/13050&quot;&gt;A nice alias&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://serverfault.com/a/307741&quot;&gt;Variation on the alias&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <link>http://DavidCWebs.github.io/mysql/mariadb/2016/08/07/export-mysql-users</link>
+                <guid>http://DavidCWebs.github.io/mysql/mariadb/2016/08/07/export-mysql-users</guid>
+                <pubDate>2016-08-07T17:52:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Persistent Iptables Rules in Ubuntu 16.04 Xenial Xerus</title>
+                <description>&lt;p&gt;The process of persisting firewall rules in Ubuntu 16.04 is different to the procedure for 14.04.&lt;/p&gt;
+
+&lt;p&gt;The Firewall setup is broadly the same as for 14.04.&lt;/p&gt;
+
+&lt;p&gt;This article briefly describes how to import a set of rules for IPtables and make these rules persist across reboots.&lt;/p&gt;
+
+&lt;h2 id=&quot;export-rules&quot;&gt;Export Rules&lt;/h2&gt;
+&lt;p&gt;If you’re exporting a ruleset from an existing Ubuntu 14.04 server, log in to this machine. Assuming that the &lt;code class=&quot;highlighter-rouge&quot;&gt;iptables-persistent&lt;/code&gt; package is installed, run the following commands:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo iptables-save &amp;gt; ~/iptables-rules/ruleset-v4
+sudo ip6tables-save &amp;gt; ~/iptables-rules/ruleset-v6&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Copy these ruleset files across to a temporary location on your Ubuntu 16.04 server.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-iptables-persistent&quot;&gt;Install iptables-persistent&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo apt-get install iptables-persistent
+sudo service iptables-persistent start
+sudo invoke-rc.d netfilter-persistent save
+sudo service netfilter-persistent stop&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;import-rules&quot;&gt;Import Rules&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Import Rules&lt;/span&gt;
+sudo iptables-restore &amp;lt; ~/serenity-iptables-rules/ruleset-v4
+sudo ip6tables-restore &amp;lt; ~/serenity-iptables-rules/ruleset-v6
+
+&lt;span class=&quot;c&quot;&gt;# Check iptables&lt;/span&gt;
+sudo iptables -S&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;save-rules&quot;&gt;Save Rules&lt;/h2&gt;
+&lt;p&gt;To save the imported rules, run the iptables-persistent dpkg-reconfigure script:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo dpkg-reconfigure iptables-persistent&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The commands &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo netfilter-persistent save&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo netfilter-persistent reload&lt;/code&gt; should work, but we’ve had problems with these commands and resorted to the dpkg-reconfigure option. It may be that a restart of the service is necessary after running these commands.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;dpkg-reconfigure&lt;/code&gt; causes &lt;code class=&quot;highlighter-rouge&quot;&gt;iptables-persistent&lt;/code&gt; to repeat the install procedure - it will prompt for you to save the current rules. The current iptables rules will be saved into a file by means of &lt;code class=&quot;highlighter-rouge&quot;&gt;iptables-save &amp;gt;/etc/iptables/rules.v4&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;ip6tables-save &amp;gt;/etc/iptables/rules.v6&lt;/code&gt;. You should see your rules in &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/iptables/rules.v4&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/iptables/rules.v6&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;iptables-persistent&lt;/code&gt; package causes the following to run on reboot:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;iptables-restore &amp;lt; /etc/iptables/rules.v4
+ip6tables-restore &amp;lt; /etc/iptables/rules.v6&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;persistent-rules-and-fail2ban&quot;&gt;Persistent Rules and Fail2Ban&lt;/h2&gt;
+&lt;p&gt;If you save iptables rules for restoration on reboot, and they contain rules added by Fail2Ban, Fail2Ban will duplicate the rules on boot. After a few reboots, the iptables can potentially get very messy.&lt;/p&gt;
+
+&lt;p&gt;To avoid this, stop the fail2ban service before saving the reconfiguration, and manually edit the saved rules to remove references to Fail2Ban. Rebooting should result in the correct rules being added, as Fail2Ban adds it’s own:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Stop Fail2Ban&lt;/span&gt;
+sudo fail2ban-client stop
+
+&lt;span class=&quot;c&quot;&gt;# Configure Persistent Rules&lt;/span&gt;
+sudo dpkg-reconfigure iptables-persistent
+
+&lt;span class=&quot;c&quot;&gt;# Make a backup copy (repeat for the v6 ruleset)&lt;/span&gt;
+sudo cp /etc/iptables/rules.v4 /etc/iptables/rules.v4.bak
+
+&lt;span class=&quot;c&quot;&gt;# Edit, remove references to Fail2Ban:&lt;/span&gt;
+sudo nano /etc/iptables/rules.v4
+
+&lt;span class=&quot;c&quot;&gt;# Reboot to apply proper rules &amp;amp; restart Fail2Ban&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# (probably better to reload rules and restart Fail2Ban - these are rough notes)&lt;/span&gt;
+sudo reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;resources&quot;&gt;Resources&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://askubuntu.com/a/373526/463571&quot;&gt;http://askubuntu.com/a/373526/463571&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/a/30819095/3590673&quot;&gt;http://stackoverflow.com/a/30819095/3590673&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://kromey.us/2016/07/setting-up-an-iptables-firewall-part-3-777.html&quot;&gt;https://kromey.us/2016/07/setting-up-an-iptables-firewall-part-3-777.html&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://oitibs.com/easy-ubuntu-16-server-firewall/&quot;&gt;https://oitibs.com/easy-ubuntu-16-server-firewall/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <link>http://DavidCWebs.github.io/security/server/linux/iptables/firewall/2016/08/07/persistent-iptables-rules-in-ubuntu-16-04-xenial-xerus</link>
+                <guid>http://DavidCWebs.github.io/security/server/linux/iptables/firewall/2016/08/07/persistent-iptables-rules-in-ubuntu-16-04-xenial-xerus</guid>
+                <pubDate>2016-08-07T15:35:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Apache Virtual Host Setup</title>
+                <description>&lt;p&gt;Apache Virtual Hosts allows multiple sites to be hosted on a single server/VPS.&lt;/p&gt;
+
+&lt;p&gt;These guidelines are for configuration of virtual hosts on Apache 2.4.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-directory-structure&quot;&gt;Create Directory Structure&lt;/h2&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo mkdir -p /var/www/html/example.com/public_html
+sudo mkdir -p /var/www/html/example2.com/public_html&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The -p flag creates intermediate directories as required.&lt;/p&gt;
+
+&lt;p&gt;Give permissions:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo chown -R &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; /var/www/example.com/public_html
+sudo chown -R &lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt;:&lt;span class=&quot;nv&quot;&gt;$USER&lt;/span&gt; /var/www/test.com/public_html&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; WordPress is going to need the www-data to have ownership of the public_html subdirectories to allow file upload etc. - for the time being, give ownership to the current user - pass ownership to www-data later.&lt;/p&gt;
+
+&lt;p&gt;Set Permissions to 755 for directories:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo chmod -R 755 /var/www&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Add index.html demo pages if necessary.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-config-files&quot;&gt;Create Config Files&lt;/h2&gt;
+&lt;p&gt;Create a config file for each site:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/yoursite.com.conf&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Use this as a template:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-apache&quot; data-lang=&quot;apache&quot;&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; *:80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;
+&lt;/span&gt;        &lt;span class=&quot;nc&quot;&gt;ServerName&lt;/span&gt; example.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAlias&lt;/span&gt; www.example.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAdmin&lt;/span&gt; info@example.com
+        &lt;span class=&quot;nc&quot;&gt;DocumentRoot&lt;/span&gt; /var/www/html/example.com/public_html
+        &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; /var/www/html/example.com/public_html&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;
+&lt;/span&gt;                &lt;span class=&quot;nc&quot;&gt;Options&lt;/span&gt; -Indexes +FollowSymLinks
+                &lt;span class=&quot;nc&quot;&gt;AllowOverride&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;All&lt;/span&gt;
+                &lt;span class=&quot;nc&quot;&gt;Require&lt;/span&gt; all granted
+        &lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;Directory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;
+&lt;/span&gt;        &lt;span class=&quot;nc&quot;&gt;ErrorLog&lt;/span&gt; ${APACHE_LOG_DIR}/example.com.error.log
+        &lt;span class=&quot;nc&quot;&gt;CustomLog&lt;/span&gt; ${APACHE_LOG_DIR}/example.com.access.log combined
+&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This config block sets the correct server name, alias and document root. Directory browsing is disallowed, and .htaccess files are allowed.&lt;/p&gt;
+
+&lt;p&gt;Site specific error reporting is added - log files are located here:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;/var/log/apache2/yoursite.com.error.log&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Enable the site using &lt;code class=&quot;highlighter-rouge&quot;&gt;a2ensite&lt;/code&gt;and restart Apache:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo a2ensite yoursite.com.conf
+sudo service apache2 restart&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;enable-apache-rewrites&quot;&gt;Enable Apache Rewrites&lt;/h2&gt;
+&lt;p&gt;Enabling the Apache rewrite module will be essential it you’re using pretty permalinks. Enable the module &amp;amp; restart Apache:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo a2enmod rewrite &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo service apache2 restart&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo a2enmod rewrite &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo /etc/init.d/apache2 restart&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;set-up--permanent-redirect&quot;&gt;Set Up  Permanent Redirect&lt;/h2&gt;
+
+&lt;p&gt;Configure a new Virtual Host on the server to intercept requests for the old domain, and permanently redirect them to the new domain:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-apache&quot; data-lang=&quot;apache&quot;&gt;&lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt; *:80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;
+&lt;/span&gt;        &lt;span class=&quot;nc&quot;&gt;ServerName&lt;/span&gt; olddomain-example.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAlias&lt;/span&gt; www.olddomain-example.com
+        &lt;span class=&quot;nc&quot;&gt;ServerAdmin&lt;/span&gt; info@example.com
+
+        &lt;span class=&quot;nc&quot;&gt;Redirect&lt;/span&gt; 301 / http://new-example.com/
+
+        &lt;span class=&quot;nc&quot;&gt;ErrorLog&lt;/span&gt; ${APACHE_LOG_DIR}/olddomain-example.com.error.log
+        &lt;span class=&quot;nc&quot;&gt;CustomLog&lt;/span&gt; ${APACHE_LOG_DIR}/olddomain-example.com.access.log combined
+&lt;span class=&quot;p&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;VirtualHost&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+</description>
+                <link>http://DavidCWebs.github.io/apache/server/linux/2016/08/05/apache-virtual-host-setup</link>
+                <guid>http://DavidCWebs.github.io/apache/server/linux/2016/08/05/apache-virtual-host-setup</guid>
+                <pubDate>2016-08-05T11:29:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Start Git Project Locally</title>
+                <description>
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;h3 id=&quot;local-vs-remote&quot;&gt;Local vs Remote&lt;/h3&gt;
+
+&lt;p&gt;Sometimes it’s useful to connect an exisiting project directory with a new GitHub repository.&lt;/p&gt;
+
+&lt;p&gt;In this case, I had a clone of Jekyll Bootstrap that I wanted to implement as my GitHub blog (this blog).&lt;/p&gt;
+
+&lt;p&gt;I’m doing this primarily to check out Jekyll and improve my GitHub skills. It’s also quite interesting to check out Markdown. I’m fairly new to all of these platforms.&lt;/p&gt;
+
+&lt;h3 id=&quot;step-one&quot;&gt;Step One&lt;/h3&gt;
+
+&lt;p&gt;Clone a GitHub repo (e.g. Jekyll Bootstrap):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In the terminal, move to a relevant local directory&lt;/li&gt;
+  &lt;li&gt;Enter &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone &amp;lt;url of repo&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;For Jekyll Bootstrap, use &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone https://github.com/plusjade/jekyll-bootstrap.git&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Set this up as the base for a new directory:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Copy the contents of the directory into the new project directory&lt;/li&gt;
+  &lt;li&gt;Delete the .git folder&lt;/li&gt;
+  &lt;li&gt;Initialise git with &lt;code class=&quot;highlighter-rouge&quot;&gt;git init&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Create a new GitHub repository&lt;/li&gt;
+  &lt;li&gt;Connect the new repo with the local directory: &lt;code class=&quot;highlighter-rouge&quot;&gt;git remote add origin https://github.com/&amp;lt;username&amp;gt;/&amp;lt;reponame&amp;gt;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git add -A&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git commit -m &quot;Commit Message&quot;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push origin master&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;what-does-jekyll-do&quot;&gt;What does Jekyll Do?&lt;/h3&gt;
+
+&lt;p&gt;Jekyll is a ruby gem you install on your local system.
+Once there you can call &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll --server&lt;/code&gt; on a directory and provided that directory
+is setup in a way jekyll expects, it will do magic stuff like parse markdown/textile files,
+compute categories, tags, permalinks, and construct your pages from layout templates and partials.&lt;/p&gt;
+
+&lt;p&gt;Once parsed, Jekyll stores the result in a self-contained static &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; folder.
+The intention here is that you can serve all contents in this folder statically from a plain static web-server.&lt;/p&gt;
+
+&lt;p&gt;You can think of Jekyll as a normalish dynamic blog but rather than parsing content, templates, and tags
+on each request, Jekyll does this once &lt;em&gt;beforehand&lt;/em&gt; and caches the &lt;em&gt;entire website&lt;/em&gt; in a folder for serving statically.&lt;/p&gt;
+
+&lt;h3 id=&quot;jekyll-is-not-blogging-software&quot;&gt;Jekyll is Not Blogging Software&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Jekyll is a parsing engine.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Jekyll does not come with any content nor does it have any templates or design elements.
+This is a common source of confusion when getting started.
+Jekyll does not come with anything you actually use or see on your website - you have to make it.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-should-i-care&quot;&gt;Why Should I Care?&lt;/h3&gt;
+
+&lt;p&gt;Jekyll is very minimalistic and very efficient.
+The most important thing to realize about Jekyll is that it creates a static representation of your website requiring only a static web-server.
+Traditional dynamic blogs like Wordpress require a database and server-side code.
+Heavily trafficked dynamic blogs must employ a caching layer that ultimately performs the same job Jekyll sets out to do; serve static content.&lt;/p&gt;
+
+&lt;p&gt;Therefore if you like to keep things simple and you prefer the command-line over an admin panel UI then give Jekyll a try.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Developers like Jekyll because we can write content like we write code:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ability to write content in markdown or textile in your favorite text-editor.&lt;/li&gt;
+  &lt;li&gt;Ability to write and preview your content via localhost.&lt;/li&gt;
+  &lt;li&gt;No internet connection required.&lt;/li&gt;
+  &lt;li&gt;Ability to publish via git.&lt;/li&gt;
+  &lt;li&gt;Ability to host your blog on a static web-server.&lt;/li&gt;
+  &lt;li&gt;Ability to host freely on GitHub Pages.&lt;/li&gt;
+  &lt;li&gt;No database required.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;how-jekyll-works&quot;&gt;How Jekyll Works&lt;/h1&gt;
+
+&lt;p&gt;The following is a complete but concise outline of exactly how Jekyll works.&lt;/p&gt;
+
+&lt;p&gt;Be aware that core concepts are introduced in rapid succession without code examples.
+This information is not intended to specifically teach you how to do anything, rather it
+is intended to give you the &lt;em&gt;full picture&lt;/em&gt; relative to what is going on in Jekyll-world.&lt;/p&gt;
+
+&lt;p&gt;Learning these core concepts should help you avoid common frustrations and ultimately
+help you better understand the code examples contained throughout Jekyll-Bootstrap.&lt;/p&gt;
+
+&lt;h2 id=&quot;initial-setup&quot;&gt;Initial Setup&lt;/h2&gt;
+
+&lt;p&gt;After &lt;a href=&quot;/index.html#start-now&quot;&gt;installing jekyll&lt;/a&gt; you’ll need to format your website directory in a way jekyll expects.
+Jekyll-bootstrap conveniently provides the base directory format.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-jekyll-application-base-format&quot;&gt;The Jekyll Application Base Format&lt;/h3&gt;
+
+&lt;p&gt;Jekyll expects your website directory to be laid out like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+|-- _config.yml
+|-- _includes
+|-- _layouts
+|   |-- default.html
+|   |-- post.html
+|-- _posts
+|   |-- 2011-10-25-open-source-is-good.markdown
+|   |-- 2011-04-26-hello-world.markdown
+|-- _site
+|-- index.html
+|-- assets
+    |-- css
+        |-- style.css
+    |-- javascripts
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_config.yml&lt;/strong&gt;
+  Stores configuration data.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_includes&lt;/strong&gt;
+  This folder is for partial views.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_layouts&lt;/strong&gt;
+  This folder is for the main templates your content will be inserted into.
+  You can have different layouts for different pages or page sections.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_posts&lt;/strong&gt;
+  This folder contains your dynamic content/posts.
+  the naming format is required to be &lt;code class=&quot;highlighter-rouge&quot;&gt;@YEAR-MONTH-DATE-title.MARKUP@&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_site&lt;/strong&gt;
+  This is where the generated site will be placed once Jekyll is done transforming it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;assets&lt;/strong&gt;
+  This folder is not part of the standard jekyll structure.
+  The assets folder represents &lt;em&gt;any generic&lt;/em&gt; folder you happen to create in your root directory.
+  Directories and files not properly formatted for jekyll will be left untouched for you to serve normally.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(read more: &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Usage&quot;&gt;https://github.com/mojombo/jekyll/wiki/Usage&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h3 id=&quot;jekyll-configuration&quot;&gt;Jekyll Configuration&lt;/h3&gt;
+
+&lt;p&gt;Jekyll supports various configuration options that are fully outlined here:
+(&lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Configuration&quot;&gt;https://github.com/mojombo/jekyll/wiki/Configuration&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h2 id=&quot;content-in-jekyll&quot;&gt;Content in Jekyll&lt;/h2&gt;
+
+&lt;p&gt;Content in Jekyll is either a post or a page.
+These content “objects” get inserted into one or more templates to build the final output for its respective static-page.&lt;/p&gt;
+
+&lt;h3 id=&quot;posts-and-pages&quot;&gt;Posts and Pages&lt;/h3&gt;
+
+&lt;p&gt;Both posts and pages should be written in markdown, textile, or HTML and may also contain Liquid templating syntax.
+Both posts and pages can have meta-data assigned on a per-page basis such as title, url path, as well as arbitrary custom meta-data.&lt;/p&gt;
+
+&lt;h3 id=&quot;working-with-posts&quot;&gt;Working With Posts&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Creating a Post&lt;/strong&gt;
+Posts are created by properly formatting a file and placing it the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
+A post must have a valid filename in the form &lt;code class=&quot;highlighter-rouge&quot;&gt;YEAR-MONTH-DATE-title.MARKUP&lt;/code&gt; and be placed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory.
+If the data format is invalid Jekyll will not recognize the file as a post. The date and title are automatically parsed from the filename of the post file.
+Additionally, each file must have &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;YAML Front-Matter&lt;/a&gt; prepended to its content.
+YAML Front-Matter is a valid YAML syntax specifying meta-data for the given file.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Order&lt;/strong&gt;
+Ordering is an important part of Jekyll but it is hard to specify a custom ordering strategy.
+Only reverse chronological and chronological ordering is supported in Jekyll.&lt;/p&gt;
+
+&lt;p&gt;Since the date is hard-coded into the filename format, to change the order, you must change the dates in the filenames.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Tags&lt;/strong&gt;
+Posts can have tags associated with them as part of their meta-data.
+Tags may be placed on posts by providing them in the post’s YAML front matter.
+You have access to the post-specific tags in the templates. These tags also get added to the sitewide collection.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Categories&lt;/strong&gt;
+Posts may be categorized by providing one or more categories in the YAML front matter.
+Categories offer more significance over tags in that they can be reflected in the URL path to the given post.
+Note categories in Jekyll work in a specific way.
+If you define more than one category you are defining a category hierarchy “set”.
+Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+title :  Hello World
+categories : [lessons, beginner]
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This defines the category hierarchy “lessons/beginner”. Note this is &lt;em&gt;one category&lt;/em&gt; node in Jekyll.
+You won’t find “lessons” and “beginner” as two separate categories unless you define them elsewhere as singular categories.&lt;/p&gt;
+
+&lt;h3 id=&quot;working-with-pages&quot;&gt;Working With Pages&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Creating a Page&lt;/strong&gt;
+Pages are created by properly formatting a file and placing it anywhere in the root directory or subdirectories that do &lt;em&gt;not&lt;/em&gt; start with an underscore.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
+In order to register as a Jekyll page the file must contain &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;YAML Front-Matter&lt;/a&gt;.
+Registering a page means 1) that Jekyll will process the page and 2) that the page object will be available in the &lt;code class=&quot;highlighter-rouge&quot;&gt;site.pages&lt;/code&gt; array for inclusion into your templates.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Categories and Tags&lt;/strong&gt;
+Pages do not compute categories nor tags so defining them will have no effect.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Sub-Directories&lt;/strong&gt;
+If pages are defined in sub-directories, the path to the page will be reflected in the url.
+Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+|-- people
+    |-- bob
+        |-- essay.html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This page will be available at &lt;code class=&quot;highlighter-rouge&quot;&gt;http://yourdomain.com/people/bob/essay.html&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Recommended Pages&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;index.html&lt;/strong&gt;
+You will always want to define the root index.html page as this will display on your root URL.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;404.html&lt;/strong&gt;
+Create a root 404.html page and GitHub Pages will serve it as your 404 response.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;sitemap.html&lt;/strong&gt;
+Generating a sitemap is good practice for SEO.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;about.html&lt;/strong&gt;
+A nice about page is easy to do and gives the human perspective to your website.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;templates-in-jekyll&quot;&gt;Templates in Jekyll&lt;/h2&gt;
+
+&lt;p&gt;Templates are used to contain a page’s or post’s content.
+All templates have access to a global site object variable: &lt;code class=&quot;highlighter-rouge&quot;&gt;site&lt;/code&gt; as well as a page object variable: &lt;code class=&quot;highlighter-rouge&quot;&gt;page&lt;/code&gt;.
+The site variable holds all accessible content and metadata relative to the site.
+The page variable holds accessible data for the given page or post being rendered at that point.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Create a Template&lt;/strong&gt;
+Templates are created by properly formatting a file and placing it in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_layouts&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
+Templates should be coded in HTML and contain YAML Front Matter.
+All templates can contain Liquid code to work with your site’s data.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Rending Page/Post Content in a Template&lt;/strong&gt;
+There is a special variable in all templates named : &lt;code class=&quot;highlighter-rouge&quot;&gt;content&lt;/code&gt;.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;content&lt;/code&gt; variable holds the page/post content including any sub-template content previously defined.
+Render the content variable wherever you want your main content to be injected into your template:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+&amp;lt;body&amp;gt;
+  &amp;lt;div id=&quot;sidebar&quot;&amp;gt; ... &amp;lt;/div&amp;gt;
+  &amp;lt;div id=&quot;main&quot;&amp;gt;
+    &amp;#123;{content}&amp;#125;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/body&amp;gt;
+...&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;sub-templates&quot;&gt;Sub-Templates&lt;/h3&gt;
+
+&lt;p&gt;Sub-templates are exactly templates with the only difference being they
+define another “root” layout/template within their YAML Front Matter.
+This essentially means a template will render inside of another template.&lt;/p&gt;
+
+&lt;h3 id=&quot;includes&quot;&gt;Includes&lt;/h3&gt;
+&lt;p&gt;In Jekyll you can define include files by placing them in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes&lt;/code&gt; folder.
+Includes are NOT templates, rather they are just code snippets that get included into templates.
+In this way, you can treat the code inside includes as if it was native to the parent template.&lt;/p&gt;
+
+&lt;p&gt;Any valid template code may be used in includes.&lt;/p&gt;
+
+&lt;h2 id=&quot;using-liquid-for-templating&quot;&gt;Using Liquid for Templating&lt;/h2&gt;
+
+&lt;p&gt;Templating is perhaps the most confusing and frustrating part of Jekyll.
+This is mainly due to the fact that Jekyll templates must use the Liquid Templating Language.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-liquid&quot;&gt;What is Liquid?&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Shopify/liquid&quot;&gt;Liquid&lt;/a&gt; is a secure templating language developed by &lt;a href=&quot;http://shopify.com&quot;&gt;Shopify&lt;/a&gt;.
+Liquid is designed for end-users to be able to execute logic within template files
+without imposing any security risk on the hosting server.&lt;/p&gt;
+
+&lt;p&gt;Jekyll uses Liquid to generate the post content within the final page layout structure and as the primary interface for working with
+your site and post/page data.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-do-we-have-to-use-liquid&quot;&gt;Why Do We Have to Use Liquid?&lt;/h3&gt;
+
+&lt;p&gt;GitHub uses Jekyll to power &lt;a href=&quot;http://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;.
+GitHub cannot afford to run arbitrary code on their servers so they lock developers down via Liquid.&lt;/p&gt;
+
+&lt;h3 id=&quot;liquid-is-not-programmer-friendly&quot;&gt;Liquid is Not Programmer-Friendly.&lt;/h3&gt;
+
+&lt;p&gt;The short story is liquid is not real code and its not intended to execute real code.
+The point being you can’t do jackshit in liquid that hasn’t been allowed explicitly by the implementation.
+What’s more you can only access data-structures that have been explicitly passed to the template.&lt;/p&gt;
+
+&lt;p&gt;In Jekyll’s case it is not possible to alter what is passed to Liquid without hacking the gem or running custom plugins.
+Both of which cannot be supported by GitHub Pages.&lt;/p&gt;
+
+&lt;p&gt;As a programmer - this is very frustrating.&lt;/p&gt;
+
+&lt;p&gt;But rather than look a gift horse in the mouth we are going to
+suck it up and view it as an opportunity to work around limitations and adopt client-side solutions when possible.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Aside&lt;/strong&gt;
+My personal stance is to not invest time trying to hack liquid. It’s really unnecessary
+&lt;em&gt;from a programmer’s&lt;/em&gt; perspective. That is to say if you have the ability to run custom plugins (i.e. run arbitrary ruby code)
+you are better off sticking with ruby. Toward that end I’ve built &lt;a href=&quot;http://github.com/plusjade/mustache-with-jekyll&quot;&gt;Mustache-with-Jekyll&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;static-assets&quot;&gt;Static Assets&lt;/h2&gt;
+
+&lt;p&gt;Static assets are any file in the root or non-underscored subfolders that are not pages.
+That is they have no valid YAML Front Matter and are thus not treated as Jekyll Pages.&lt;/p&gt;
+
+&lt;p&gt;Static assets should be used for images, css, and javascript files.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-jekyll-parses-files&quot;&gt;How Jekyll Parses Files&lt;/h2&gt;
+
+&lt;p&gt;Remember Jekyll is a processing engine. There are two main types of parsing in Jekyll.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Content parsing.&lt;/strong&gt;
+  This is done with textile or markdown.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Template parsing.&lt;/strong&gt;
+This is done with the liquid templating language.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And thus there are two main types of file formats needed for this parsing.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Post and Page files.&lt;/strong&gt;
+All content in Jekyll is either a post or a page so valid posts and pages are parsed with markdown or textile.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Template files.&lt;/strong&gt;
+  These files go in &lt;code class=&quot;highlighter-rouge&quot;&gt;_layouts&lt;/code&gt; folder and contain your blogs &lt;strong&gt;templates&lt;/strong&gt;. They should be made in HTML with the help of Liquid syntax.
+  Since include files are simply injected into templates they are essentially parsed as if they were native to the template.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Arbitrary files and folders.&lt;/strong&gt;
+Files that &lt;em&gt;are not&lt;/em&gt; valid pages are treated as static content and pass through
+Jekyll untouched and reside on your blog in the exact structure and format they originally existed in.&lt;/p&gt;
+
+&lt;h3 id=&quot;formatting-files-for-parsing&quot;&gt;Formatting Files for Parsing.&lt;/h3&gt;
+
+&lt;p&gt;We’ve outlined the need for valid formatting using &lt;strong&gt;YAML Front Matter&lt;/strong&gt;.
+Templates, posts, and pages all need to provide valid YAML Front Matter even if the Matter is empty.
+This is the only way Jekyll knows you want the file processed.&lt;/p&gt;
+
+&lt;p&gt;YAML Front Matter must be prepended to the top of template/post/page files:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+layout: post
+category : pages
+tags : [how-to, jekyll]
+---
+
+... contents ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Three hyphens on a new line start the Front-Matter block and three hyphens on a new line end the block.
+The data inside the block must be valid YAML.&lt;/p&gt;
+
+&lt;p&gt;Configuration parameters for YAML Front-Matter is outlined here:
+&lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;A comprehensive explanation of YAML Front Matter&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;defining-layouts-for-posts-and-templates-parsing&quot;&gt;Defining Layouts for Posts and Templates Parsing.&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;layout&lt;/code&gt; parameter in the YAML Front Matter defines the template file for which the given post or template should be injected into.
+If a template file specifies its own layout, it is effectively being used as a &lt;code class=&quot;highlighter-rouge&quot;&gt;sub-template.&lt;/code&gt;
+That is to say loading a post file into a template file that refers to another template file with work in the way you’d expect; as a nested sub-template.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-jekyll-generates-the-final-static-files&quot;&gt;How Jekyll Generates the Final Static Files.&lt;/h2&gt;
+
+&lt;p&gt;Ultimately, Jekyll’s job is to generate a static representation of your website.
+The following is an outline of how that’s done:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll collects data.&lt;/strong&gt;
+  Jekyll scans the posts directory and collects all posts files as post objects. It then scans the layout assets and collects those and finally scans other directories in search of pages.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll computes data.&lt;/strong&gt;
+  Jekyll takes these objects, computes metadata (permalinks, tags, categories, titles, dates) from them and constructs one
+  big &lt;code class=&quot;highlighter-rouge&quot;&gt;site&lt;/code&gt; object that holds all the posts, pages, layouts, and respective metadata.
+  At this stage your site is one big computed ruby object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll liquifies posts and templates.&lt;/strong&gt;
+  Next jekyll loops through each post file and converts (through markdown or textile) and &lt;strong&gt;liquifies&lt;/strong&gt; the post inside of its respective layout(s).
+  Once the post is parsed and liquified inside the the proper layout structure, the layout itself is “liquified”.
+ &lt;strong&gt;Liquification&lt;/strong&gt; is defined as follows: Jekyll initiates a Liquid template, and passes a simpler hash representation of the ruby site object as well as a simpler
+  hash representation of the ruby post object. These simplified data structures are what you have access to in the templates.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll generates output.&lt;/strong&gt;
+ Finally the liquid templates are “rendered”, thereby processing any liquid syntax provided in the templates
+ and saving the final, static representation of the file.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes.&lt;/strong&gt;
+Because Jekyll computes the entire site in one fell swoop, each template is given access to
+a global &lt;code class=&quot;highlighter-rouge&quot;&gt;site&lt;/code&gt; hash that contains useful data. It is this data that you’ll iterate through and format
+using the Liquid tags and filters in order to render it onto a given page.&lt;/p&gt;
+
+&lt;p&gt;Remember, in Jekyll you are an end-user. Your API has only two components:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The manner in which you setup your directory.&lt;/li&gt;
+  &lt;li&gt;The liquid syntax and variables passed into the liquid templates.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;All the data objects available to you in the templates via Liquid are outlined in the &lt;strong&gt;API Section&lt;/strong&gt; of Jekyll-Bootstrap.
+You can also read the original documentation here: &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Template-Data&quot;&gt;https://github.com/mojombo/jekyll/wiki/Template-Data&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I hope this paints a clearer picture of what Jekyll is doing and why it works the way it does.
+As noted, our main programming constraint is the fact that our API is limited to what is accessible via Liquid and Liquid only.&lt;/p&gt;
+
+&lt;p&gt;Jekyll-bootstrap is intended to provide helper methods and strategies aimed at making it more intuitive and easier to work with Jekyll =)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thank you&lt;/strong&gt; for reading this far.&lt;/p&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next Steps&lt;/h2&gt;
+
+&lt;p&gt;Please take a look at &lt;a href=&quot;&quot;&gt;&lt;/a&gt;
+or jump right into &lt;a href=&quot;&quot;&gt;Usage&lt;/a&gt; if you’d like.&lt;/p&gt;
+</description>
+                <link>http://DavidCWebs.github.io/git/2014/05/25/start-git-project-locally</link>
+                <guid>http://DavidCWebs.github.io/git/2014/05/25/start-git-project-locally</guid>
+                <pubDate>2014-05-25T00:00:00+01:00</pubDate>
+        </item>
+
+        <item>
+                <title>Jekyll Introduction</title>
+                <description>
+&lt;p&gt;This Jekyll introduction will outline specifically  what Jekyll is and why you would want to use it.
+Directly following the intro we’ll learn exactly &lt;em&gt;how&lt;/em&gt; Jekyll does what it does.&lt;/p&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;h3 id=&quot;what-is-jekyll&quot;&gt;What is Jekyll?&lt;/h3&gt;
+
+&lt;p&gt;Jekyll is a parsing engine bundled as a ruby gem used to build static websites from
+dynamic components such as templates, partials, liquid code, markdown, etc. Jekyll is known as “a simple, blog aware, static site generator”.&lt;/p&gt;
+
+&lt;h3 id=&quot;examples&quot;&gt;Examples&lt;/h3&gt;
+
+&lt;p&gt;This website is created with Jekyll. &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Sites&quot;&gt;Other Jekyll websites&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-does-jekyll-do&quot;&gt;What does Jekyll Do?&lt;/h3&gt;
+
+&lt;p&gt;Jekyll is a ruby gem you install on your local system.
+Once there you can call &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll --server&lt;/code&gt; on a directory and provided that directory
+is setup in a way jekyll expects, it will do magic stuff like parse markdown/textile files,
+compute categories, tags, permalinks, and construct your pages from layout templates and partials.&lt;/p&gt;
+
+&lt;p&gt;Once parsed, Jekyll stores the result in a self-contained static &lt;code class=&quot;highlighter-rouge&quot;&gt;_site&lt;/code&gt; folder.
+The intention here is that you can serve all contents in this folder statically from a plain static web-server.&lt;/p&gt;
+
+&lt;p&gt;You can think of Jekyll as a normalish dynamic blog but rather than parsing content, templates, and tags
+on each request, Jekyll does this once &lt;em&gt;beforehand&lt;/em&gt; and caches the &lt;em&gt;entire website&lt;/em&gt; in a folder for serving statically.&lt;/p&gt;
+
+&lt;h3 id=&quot;jekyll-is-not-blogging-software&quot;&gt;Jekyll is Not Blogging Software&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Jekyll is a parsing engine.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Jekyll does not come with any content nor does it have any templates or design elements.
+This is a common source of confusion when getting started.
+Jekyll does not come with anything you actually use or see on your website - you have to make it.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-should-i-care&quot;&gt;Why Should I Care?&lt;/h3&gt;
+
+&lt;p&gt;Jekyll is very minimalistic and very efficient.
+The most important thing to realize about Jekyll is that it creates a static representation of your website requiring only a static web-server.
+Traditional dynamic blogs like Wordpress require a database and server-side code.
+Heavily trafficked dynamic blogs must employ a caching layer that ultimately performs the same job Jekyll sets out to do; serve static content.&lt;/p&gt;
+
+&lt;p&gt;Therefore if you like to keep things simple and you prefer the command-line over an admin panel UI then give Jekyll a try.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Developers like Jekyll because we can write content like we write code:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ability to write content in markdown or textile in your favorite text-editor.&lt;/li&gt;
+  &lt;li&gt;Ability to write and preview your content via localhost.&lt;/li&gt;
+  &lt;li&gt;No internet connection required.&lt;/li&gt;
+  &lt;li&gt;Ability to publish via git.&lt;/li&gt;
+  &lt;li&gt;Ability to host your blog on a static web-server.&lt;/li&gt;
+  &lt;li&gt;Ability to host freely on GitHub Pages.&lt;/li&gt;
+  &lt;li&gt;No database required.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;how-jekyll-works&quot;&gt;How Jekyll Works&lt;/h1&gt;
+
+&lt;p&gt;The following is a complete but concise outline of exactly how Jekyll works.&lt;/p&gt;
+
+&lt;p&gt;Be aware that core concepts are introduced in rapid succession without code examples.
+This information is not intended to specifically teach you how to do anything, rather it
+is intended to give you the &lt;em&gt;full picture&lt;/em&gt; relative to what is going on in Jekyll-world.&lt;/p&gt;
+
+&lt;p&gt;Learning these core concepts should help you avoid common frustrations and ultimately
+help you better understand the code examples contained throughout Jekyll-Bootstrap.&lt;/p&gt;
+
+&lt;h2 id=&quot;initial-setup&quot;&gt;Initial Setup&lt;/h2&gt;
+
+&lt;p&gt;After &lt;a href=&quot;/index.html#start-now&quot;&gt;installing jekyll&lt;/a&gt; you’ll need to format your website directory in a way jekyll expects.
+Jekyll-bootstrap conveniently provides the base directory format.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-jekyll-application-base-format&quot;&gt;The Jekyll Application Base Format&lt;/h3&gt;
+
+&lt;p&gt;Jekyll expects your website directory to be laid out like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+|-- _config.yml
+|-- _includes
+|-- _layouts
+|   |-- default.html
+|   |-- post.html
+|-- _posts
+|   |-- 2011-10-25-open-source-is-good.markdown
+|   |-- 2011-04-26-hello-world.markdown
+|-- _site
+|-- index.html
+|-- assets
+    |-- css
+        |-- style.css
+    |-- javascripts
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_config.yml&lt;/strong&gt;
+  Stores configuration data.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_includes&lt;/strong&gt;
+  This folder is for partial views.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_layouts&lt;/strong&gt;
+  This folder is for the main templates your content will be inserted into.
+  You can have different layouts for different pages or page sections.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_posts&lt;/strong&gt;
+  This folder contains your dynamic content/posts.
+  the naming format is required to be &lt;code class=&quot;highlighter-rouge&quot;&gt;@YEAR-MONTH-DATE-title.MARKUP@&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;_site&lt;/strong&gt;
+  This is where the generated site will be placed once Jekyll is done transforming it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;assets&lt;/strong&gt;
+  This folder is not part of the standard jekyll structure.
+  The assets folder represents &lt;em&gt;any generic&lt;/em&gt; folder you happen to create in your root directory.
+  Directories and files not properly formatted for jekyll will be left untouched for you to serve normally.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(read more: &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Usage&quot;&gt;https://github.com/mojombo/jekyll/wiki/Usage&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h3 id=&quot;jekyll-configuration&quot;&gt;Jekyll Configuration&lt;/h3&gt;
+
+&lt;p&gt;Jekyll supports various configuration options that are fully outlined here:
+(&lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Configuration&quot;&gt;https://github.com/mojombo/jekyll/wiki/Configuration&lt;/a&gt;)&lt;/p&gt;
+
+&lt;h2 id=&quot;content-in-jekyll&quot;&gt;Content in Jekyll&lt;/h2&gt;
+
+&lt;p&gt;Content in Jekyll is either a post or a page.
+These content “objects” get inserted into one or more templates to build the final output for its respective static-page.&lt;/p&gt;
+
+&lt;h3 id=&quot;posts-and-pages&quot;&gt;Posts and Pages&lt;/h3&gt;
+
+&lt;p&gt;Both posts and pages should be written in markdown, textile, or HTML and may also contain Liquid templating syntax.
+Both posts and pages can have meta-data assigned on a per-page basis such as title, url path, as well as arbitrary custom meta-data.&lt;/p&gt;
+
+&lt;h3 id=&quot;working-with-posts&quot;&gt;Working With Posts&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Creating a Post&lt;/strong&gt;
+Posts are created by properly formatting a file and placing it the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
+A post must have a valid filename in the form &lt;code class=&quot;highlighter-rouge&quot;&gt;YEAR-MONTH-DATE-title.MARKUP&lt;/code&gt; and be placed in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory.
+If the data format is invalid Jekyll will not recognize the file as a post. The date and title are automatically parsed from the filename of the post file.
+Additionally, each file must have &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;YAML Front-Matter&lt;/a&gt; prepended to its content.
+YAML Front-Matter is a valid YAML syntax specifying meta-data for the given file.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Order&lt;/strong&gt;
+Ordering is an important part of Jekyll but it is hard to specify a custom ordering strategy.
+Only reverse chronological and chronological ordering is supported in Jekyll.&lt;/p&gt;
+
+&lt;p&gt;Since the date is hard-coded into the filename format, to change the order, you must change the dates in the filenames.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Tags&lt;/strong&gt;
+Posts can have tags associated with them as part of their meta-data.
+Tags may be placed on posts by providing them in the post’s YAML front matter.
+You have access to the post-specific tags in the templates. These tags also get added to the sitewide collection.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Categories&lt;/strong&gt;
+Posts may be categorized by providing one or more categories in the YAML front matter.
+Categories offer more significance over tags in that they can be reflected in the URL path to the given post.
+Note categories in Jekyll work in a specific way.
+If you define more than one category you are defining a category hierarchy “set”.
+Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+title :  Hello World
+categories : [lessons, beginner]
+---
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This defines the category hierarchy “lessons/beginner”. Note this is &lt;em&gt;one category&lt;/em&gt; node in Jekyll.
+You won’t find “lessons” and “beginner” as two separate categories unless you define them elsewhere as singular categories.&lt;/p&gt;
+
+&lt;h3 id=&quot;working-with-pages&quot;&gt;Working With Pages&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Creating a Page&lt;/strong&gt;
+Pages are created by properly formatting a file and placing it anywhere in the root directory or subdirectories that do &lt;em&gt;not&lt;/em&gt; start with an underscore.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
+In order to register as a Jekyll page the file must contain &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;YAML Front-Matter&lt;/a&gt;.
+Registering a page means 1) that Jekyll will process the page and 2) that the page object will be available in the &lt;code class=&quot;highlighter-rouge&quot;&gt;site.pages&lt;/code&gt; array for inclusion into your templates.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Categories and Tags&lt;/strong&gt;
+Pages do not compute categories nor tags so defining them will have no effect.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Sub-Directories&lt;/strong&gt;
+If pages are defined in sub-directories, the path to the page will be reflected in the url.
+Example:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+|-- people
+    |-- bob
+        |-- essay.html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This page will be available at &lt;code class=&quot;highlighter-rouge&quot;&gt;http://yourdomain.com/people/bob/essay.html&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Recommended Pages&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;index.html&lt;/strong&gt;
+You will always want to define the root index.html page as this will display on your root URL.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;404.html&lt;/strong&gt;
+Create a root 404.html page and GitHub Pages will serve it as your 404 response.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;sitemap.html&lt;/strong&gt;
+Generating a sitemap is good practice for SEO.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;about.html&lt;/strong&gt;
+A nice about page is easy to do and gives the human perspective to your website.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;templates-in-jekyll&quot;&gt;Templates in Jekyll&lt;/h2&gt;
+
+&lt;p&gt;Templates are used to contain a page’s or post’s content.
+All templates have access to a global site object variable: &lt;code class=&quot;highlighter-rouge&quot;&gt;site&lt;/code&gt; as well as a page object variable: &lt;code class=&quot;highlighter-rouge&quot;&gt;page&lt;/code&gt;.
+The site variable holds all accessible content and metadata relative to the site.
+The page variable holds accessible data for the given page or post being rendered at that point.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Create a Template&lt;/strong&gt;
+Templates are created by properly formatting a file and placing it in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_layouts&lt;/code&gt; directory.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;
+Templates should be coded in HTML and contain YAML Front Matter.
+All templates can contain Liquid code to work with your site’s data.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Rending Page/Post Content in a Template&lt;/strong&gt;
+There is a special variable in all templates named : &lt;code class=&quot;highlighter-rouge&quot;&gt;content&lt;/code&gt;.
+The &lt;code class=&quot;highlighter-rouge&quot;&gt;content&lt;/code&gt; variable holds the page/post content including any sub-template content previously defined.
+Render the content variable wherever you want your main content to be injected into your template:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;...
+&amp;lt;body&amp;gt;
+  &amp;lt;div id=&quot;sidebar&quot;&amp;gt; ... &amp;lt;/div&amp;gt;
+  &amp;lt;div id=&quot;main&quot;&amp;gt;
+    &amp;#123;{content}&amp;#125;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/body&amp;gt;
+...&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;sub-templates&quot;&gt;Sub-Templates&lt;/h3&gt;
+
+&lt;p&gt;Sub-templates are exactly templates with the only difference being they
+define another “root” layout/template within their YAML Front Matter.
+This essentially means a template will render inside of another template.&lt;/p&gt;
+
+&lt;h3 id=&quot;includes&quot;&gt;Includes&lt;/h3&gt;
+&lt;p&gt;In Jekyll you can define include files by placing them in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_includes&lt;/code&gt; folder.
+Includes are NOT templates, rather they are just code snippets that get included into templates.
+In this way, you can treat the code inside includes as if it was native to the parent template.&lt;/p&gt;
+
+&lt;p&gt;Any valid template code may be used in includes.&lt;/p&gt;
+
+&lt;h2 id=&quot;using-liquid-for-templating&quot;&gt;Using Liquid for Templating&lt;/h2&gt;
+
+&lt;p&gt;Templating is perhaps the most confusing and frustrating part of Jekyll.
+This is mainly due to the fact that Jekyll templates must use the Liquid Templating Language.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-liquid&quot;&gt;What is Liquid?&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Shopify/liquid&quot;&gt;Liquid&lt;/a&gt; is a secure templating language developed by &lt;a href=&quot;http://shopify.com&quot;&gt;Shopify&lt;/a&gt;.
+Liquid is designed for end-users to be able to execute logic within template files
+without imposing any security risk on the hosting server.&lt;/p&gt;
+
+&lt;p&gt;Jekyll uses Liquid to generate the post content within the final page layout structure and as the primary interface for working with
+your site and post/page data.&lt;/p&gt;
+
+&lt;h3 id=&quot;why-do-we-have-to-use-liquid&quot;&gt;Why Do We Have to Use Liquid?&lt;/h3&gt;
+
+&lt;p&gt;GitHub uses Jekyll to power &lt;a href=&quot;http://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;.
+GitHub cannot afford to run arbitrary code on their servers so they lock developers down via Liquid.&lt;/p&gt;
+
+&lt;h3 id=&quot;liquid-is-not-programmer-friendly&quot;&gt;Liquid is Not Programmer-Friendly.&lt;/h3&gt;
+
+&lt;p&gt;The short story is liquid is not real code and its not intended to execute real code.
+The point being you can’t do jackshit in liquid that hasn’t been allowed explicitly by the implementation.
+What’s more you can only access data-structures that have been explicitly passed to the template.&lt;/p&gt;
+
+&lt;p&gt;In Jekyll’s case it is not possible to alter what is passed to Liquid without hacking the gem or running custom plugins.
+Both of which cannot be supported by GitHub Pages.&lt;/p&gt;
+
+&lt;p&gt;As a programmer - this is very frustrating.&lt;/p&gt;
+
+&lt;p&gt;But rather than look a gift horse in the mouth we are going to
+suck it up and view it as an opportunity to work around limitations and adopt client-side solutions when possible.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Aside&lt;/strong&gt;
+My personal stance is to not invest time trying to hack liquid. It’s really unnecessary
+&lt;em&gt;from a programmer’s&lt;/em&gt; perspective. That is to say if you have the ability to run custom plugins (i.e. run arbitrary ruby code)
+you are better off sticking with ruby. Toward that end I’ve built &lt;a href=&quot;http://github.com/plusjade/mustache-with-jekyll&quot;&gt;Mustache-with-Jekyll&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;static-assets&quot;&gt;Static Assets&lt;/h2&gt;
+
+&lt;p&gt;Static assets are any file in the root or non-underscored subfolders that are not pages.
+That is they have no valid YAML Front Matter and are thus not treated as Jekyll Pages.&lt;/p&gt;
+
+&lt;p&gt;Static assets should be used for images, css, and javascript files.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-jekyll-parses-files&quot;&gt;How Jekyll Parses Files&lt;/h2&gt;
+
+&lt;p&gt;Remember Jekyll is a processing engine. There are two main types of parsing in Jekyll.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Content parsing.&lt;/strong&gt;
+  This is done with textile or markdown.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Template parsing.&lt;/strong&gt;
+This is done with the liquid templating language.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And thus there are two main types of file formats needed for this parsing.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Post and Page files.&lt;/strong&gt;
+All content in Jekyll is either a post or a page so valid posts and pages are parsed with markdown or textile.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Template files.&lt;/strong&gt;
+  These files go in &lt;code class=&quot;highlighter-rouge&quot;&gt;_layouts&lt;/code&gt; folder and contain your blogs &lt;strong&gt;templates&lt;/strong&gt;. They should be made in HTML with the help of Liquid syntax.
+  Since include files are simply injected into templates they are essentially parsed as if they were native to the template.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Arbitrary files and folders.&lt;/strong&gt;
+Files that &lt;em&gt;are not&lt;/em&gt; valid pages are treated as static content and pass through
+Jekyll untouched and reside on your blog in the exact structure and format they originally existed in.&lt;/p&gt;
+
+&lt;h3 id=&quot;formatting-files-for-parsing&quot;&gt;Formatting Files for Parsing.&lt;/h3&gt;
+
+&lt;p&gt;We’ve outlined the need for valid formatting using &lt;strong&gt;YAML Front Matter&lt;/strong&gt;.
+Templates, posts, and pages all need to provide valid YAML Front Matter even if the Matter is empty.
+This is the only way Jekyll knows you want the file processed.&lt;/p&gt;
+
+&lt;p&gt;YAML Front Matter must be prepended to the top of template/post/page files:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+layout: post
+category : pages
+tags : [how-to, jekyll]
+---
+
+... contents ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Three hyphens on a new line start the Front-Matter block and three hyphens on a new line end the block.
+The data inside the block must be valid YAML.&lt;/p&gt;
+
+&lt;p&gt;Configuration parameters for YAML Front-Matter is outlined here:
+&lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter&quot;&gt;A comprehensive explanation of YAML Front Matter&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;defining-layouts-for-posts-and-templates-parsing&quot;&gt;Defining Layouts for Posts and Templates Parsing.&lt;/h4&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;layout&lt;/code&gt; parameter in the YAML Front Matter defines the template file for which the given post or template should be injected into.
+If a template file specifies its own layout, it is effectively being used as a &lt;code class=&quot;highlighter-rouge&quot;&gt;sub-template.&lt;/code&gt;
+That is to say loading a post file into a template file that refers to another template file with work in the way you’d expect; as a nested sub-template.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-jekyll-generates-the-final-static-files&quot;&gt;How Jekyll Generates the Final Static Files.&lt;/h2&gt;
+
+&lt;p&gt;Ultimately, Jekyll’s job is to generate a static representation of your website.
+The following is an outline of how that’s done:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll collects data.&lt;/strong&gt;
+  Jekyll scans the posts directory and collects all posts files as post objects. It then scans the layout assets and collects those and finally scans other directories in search of pages.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll computes data.&lt;/strong&gt;
+  Jekyll takes these objects, computes metadata (permalinks, tags, categories, titles, dates) from them and constructs one
+  big &lt;code class=&quot;highlighter-rouge&quot;&gt;site&lt;/code&gt; object that holds all the posts, pages, layouts, and respective metadata.
+  At this stage your site is one big computed ruby object.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll liquifies posts and templates.&lt;/strong&gt;
+  Next jekyll loops through each post file and converts (through markdown or textile) and &lt;strong&gt;liquifies&lt;/strong&gt; the post inside of its respective layout(s).
+  Once the post is parsed and liquified inside the the proper layout structure, the layout itself is “liquified”.
+ &lt;strong&gt;Liquification&lt;/strong&gt; is defined as follows: Jekyll initiates a Liquid template, and passes a simpler hash representation of the ruby site object as well as a simpler
+  hash representation of the ruby post object. These simplified data structures are what you have access to in the templates.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Jekyll generates output.&lt;/strong&gt;
+ Finally the liquid templates are “rendered”, thereby processing any liquid syntax provided in the templates
+ and saving the final, static representation of the file.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Notes.&lt;/strong&gt;
+Because Jekyll computes the entire site in one fell swoop, each template is given access to
+a global &lt;code class=&quot;highlighter-rouge&quot;&gt;site&lt;/code&gt; hash that contains useful data. It is this data that you’ll iterate through and format
+using the Liquid tags and filters in order to render it onto a given page.&lt;/p&gt;
+
+&lt;p&gt;Remember, in Jekyll you are an end-user. Your API has only two components:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The manner in which you setup your directory.&lt;/li&gt;
+  &lt;li&gt;The liquid syntax and variables passed into the liquid templates.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;All the data objects available to you in the templates via Liquid are outlined in the &lt;strong&gt;API Section&lt;/strong&gt; of Jekyll-Bootstrap.
+You can also read the original documentation here: &lt;a href=&quot;https://github.com/mojombo/jekyll/wiki/Template-Data&quot;&gt;https://github.com/mojombo/jekyll/wiki/Template-Data&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;I hope this paints a clearer picture of what Jekyll is doing and why it works the way it does.
+As noted, our main programming constraint is the fact that our API is limited to what is accessible via Liquid and Liquid only.&lt;/p&gt;
+
+&lt;p&gt;Jekyll-bootstrap is intended to provide helper methods and strategies aimed at making it more intuitive and easier to work with Jekyll =)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Thank you&lt;/strong&gt; for reading this far.&lt;/p&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next Steps&lt;/h2&gt;
+
+&lt;p&gt;Please take a look at &lt;a href=&quot;&quot;&gt;&lt;/a&gt;
+or jump right into &lt;a href=&quot;&quot;&gt;Usage&lt;/a&gt; if you’d like.&lt;/p&gt;
+</description>
+                <link>http://DavidCWebs.github.io/lessons/2011/12/29/jekyll-introduction</link>
+                <guid>http://DavidCWebs.github.io/lessons/2011/12/29/jekyll-introduction</guid>
+                <pubDate>2011-12-29T00:00:00+00:00</pubDate>
+        </item>
+
+
+</channel>
+</rss>

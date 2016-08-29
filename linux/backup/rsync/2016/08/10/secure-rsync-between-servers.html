@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Secure rsync Between Servers</title>
+    
+    <meta name="author" content="David Egan">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap styles -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional theme -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Sticky Footer -->
+    <link href="/assets/themes/bootstrap-3/bootstrap/css/bs-sticky-footer.css" rel="stylesheet">
+    
+    <!-- Custom styles -->
+    <link href="/assets/themes/bootstrap-3/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <div id="wrap">
+      <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#jb-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Jekyll Bootstrap</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="jb-navbar-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+          <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div class="container">
+        
+
+<div class="page-header">
+  <h1>Secure rsync Between Servers </h1>
+</div>
+
+<div class="row post-full">
+  <div class="col-xs-12">
+    <div class="date">
+      <span>10 August 2016</span>
+    </div>
+    <div class="content">
+      <p>This method allows for automatic incremental backups between servers.</p>
+
+<h2 id="backup-server-pulls-from-production-server">Backup Server Pulls from Production Server</h2>
+<p>Either server could initiate the sync - but if Production initiates, it would need write access to the Backup server. It is probably safest to give the Backup server read access to the Production server, so this guide assumes that the Backup machine initiates the sync.</p>
+
+<p>The files to be synced have been built by a local automatic rsync-based incremental backup script that runs on the Production server. This is because:</p>
+
+<ul>
+  <li>There is enough space on the Production machine (approx 8G out of 40G is in use)</li>
+  <li>Having an incremental backup on the Production server allows for quick restores in the event of non-catastrophic failure</li>
+  <li>Having backups on the production server is “belt and braces” - backups are stored in multiple locations</li>
+  <li>The script has root access and can build a complete set of backup files: /var/www/html/, Apache config files, MySQL config files, Database files (built by mysqldump)</li>
+</ul>
+
+<p>This method uses the <code class="highlighter-rouge">rrsync</code> perl script (restricted rsync) to restrict rsync to a subdirectory declared in .ssh/authorized_keys. This works really well since our local incremental backup has written all the files we need to a single backup directory.</p>
+
+<h2 id="set-up-a-backup-user-on-the-production-server">Set up a Backup User on the Production Server</h2>
+<p>Set up a user without sudo privileges. This user is only going to be used to store backups - which provides another level of security.</p>
+
+<p>The backup user home directory will receive incremental backups, and hold the SSH public key to allow the remote backup server to connect - and that’s about it.</p>
+
+<h2 id="set-up-an-ssh-key-pair-on-the-backup-server">Set up an SSH Key Pair on the Backup Server</h2>
+<p>Because the backup script is designed to be triggered automatically by a cron job, the user that will be running the rsync command on the production server will be root.</p>
+
+<p>It is therefore important to transfer the public SSH key for <strong>the root user</strong> to the backup target machine.</p>
+
+<p>In addition, the SSH key should NOT have a passphrase, so that connection can be made automatically. We will also limit the actions that can be carried out by this SSH connection.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Switch to root</span>
+su root
+
+<span class="c"># Generate an SSH key pair, WITHOUT a passphrase</span>
+ssh-keygen -t rsa
+
+<span class="c"># copy the public key to the backupuser account on the target Production machine</span>
+ssh-copy-id -p 1234 backupuser@123.456.789.0</code></pre></figure>
+
+<h2 id="failure-to-copy-public-key">Failure to Copy Public Key</h2>
+<p>If the public key doesn’t copy across, you’ll see an error message like this:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">/usr/bin/ssh-copy-id: INFO: attempting to log <span class="k">in </span>with the new key<span class="o">(</span>s<span class="o">)</span>, to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key<span class="o">(</span>s<span class="o">)</span> remain to be installed -- <span class="k">if </span>you are prompted now it is to install the new keys
+Permission denied <span class="o">(</span>publickey<span class="o">)</span>.</code></pre></figure>
+
+<p>This means that the remote server has refused the connection.</p>
+
+<p>In my case, this is because I usually set up servers such that access is via SSH key only - with password authentication disabled.</p>
+
+<p><strong>To copy a public SSH key to a remote server, password SSH login must be enabled on the remote server</strong></p>
+
+<p>To enable password login:</p>
+
+<ul>
+  <li>SSH into the remote server</li>
+  <li>Configure SSH: <code class="highlighter-rouge">sudo nano /etc/ssh/sshd_config</code></li>
+  <li>Edit to allow password authentication: <code class="highlighter-rouge">PasswordAuthentication yes</code></li>
+  <li>Save &amp; exit, then reload the SSH server: <code class="highlighter-rouge">sudo reload ssh</code></li>
+</ul>
+
+<p>Once the key has been copied across (which will require password entry for the relevant user), test SSH access (as prompted). If it works, you can safely disable password login on the remote machine.</p>
+
+<h2 id="limit-actions-for-this-ssh-connection-to-restricted-rsync">Limit Actions for this SSH Connection to Restricted rsync</h2>
+<p>Using an SSH key without a passphrase makes it possible to automate remote tasks - a user-entered passphrase is not required for key decryption.</p>
+
+<p>Automation of backup tasks is essential - if backup relies on human intervention, sooner or later it will get missed or messed up. However, using SSH keys without a passphrase is a security risk - is someone had access to the backup server, they would be easily able to access the remote Production server.</p>
+
+<p>To prevent this, SSH allows restriction of the commands that can be executed by a specific set of keys. This is accomplished by editing the <code class="highlighter-rouge">/home/backupuser/.ssh/authorized_keys</code> file for the backup user on the Production server.</p>
+
+<p>A script called rrsync (which stands for restricted rsync) is provided with rsync specifically to ease the restricting keys to be used only for rsync via .ssh/authorized_keys.</p>
+
+<p>On Ubuntu, the script is located here: <code class="highlighter-rouge">/usr/share/doc/rsync/scripts/rrsync.gz</code>. The script needs to be unzipped and installed under <code class="highlighter-rouge">user/local/bin</code>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Copy the archive rrsync script to /usr/local/bin</span>
+sudo cp /usr/share/doc/rsync/scripts/rrsync.gz  /usr/local/bin/
+
+<span class="c"># Unzip the script</span>
+sudo gzip -d   /usr/local/bin/rrsync.gz
+
+<span class="c"># Give it correct permissions</span>
+sudo chmod 755 /usr/local/bin/rrsync</code></pre></figure>
+
+<p>Once <code class="highlighter-rouge">rrsync</code> is in place, we can lock down access for our SSH key by amending the <code class="highlighter-rouge">/home/backupuser/.ssh/authorized_keys</code> file.</p>
+
+<p>Open the public key for the backup user on the Production Server. This will constitute a single line of text:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">sudo nano /home/backupuser/.ssh/authorized_keys</code></pre></figure>
+
+<p>Prepend the following:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">command</span><span class="o">=</span><span class="s2">"/usr/local/bin/rrsync -ro /home/path-to/backup/"</span>,no-agent-forwarding,no-port-forwarding,no-pty,no-user-rc,no-X11-forwarding</code></pre></figure>
+
+<ul>
+  <li>The <code class="highlighter-rouge">command="/usr/local/bin/rrsync ..."</code> restricts access of that particular public key - only the given command can be executed</li>
+  <li>The <code class="highlighter-rouge">...-ro /home/path-to/backup/"</code> gives <strong>read-only</strong> access to the specified directory</li>
+  <li>The <code class="highlighter-rouge">no-*</code> options further restrict what actions can be carried out with the public key.</li>
+  <li>Note that the full path is need to reference rrsync</li>
+</ul>
+
+<p>If you try and SSH into the Production machine from the Backup server you should now see a message like this:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">PTY allocation request failed on channel 0
+/usr/local/bin/rrsync: Not invoked via sshd
+Use <span class="s1">'command="/usr/local/bin/rrsync [-ro] SUBDIR"'</span> <span class="k">in </span>front of lines <span class="k">in</span> /home/backupuser/.ssh/authorized_keys
+Connection to 123.45.67.89 closed.</code></pre></figure>
+
+<h2 id="command-rsync-from--backup-server">Command rsync from  Backup Server</h2>
+
+<p><strong>Note:</strong> After the above amendment to the <code class="highlighter-rouge">authorized_keys</code> file, the final path from the Backup servers point of view is now “/”:</p>
+
+<p>Sample rsync command from the Backup server:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">rsync --log-file<span class="o">=</span><span class="nv">$HOME</span>/.rsyncd.log --progress -az -H -e <span class="s2">"ssh -p 1234"</span> backupuser@123.456.789.0:/ ~/backup-target-directory</code></pre></figure>
+
+<p>This specifies:</p>
+
+<ul>
+  <li>-a: archive mode; equals -rlptgoD (no -H,-A,-X)</li>
+  <li>-z: Compress file data during the transfer</li>
+  <li>-H: Maintain hardlinks (important due to our incremental backup)</li>
+  <li>-e “ssh -p 1234”: connect via SSH on port 1234</li>
+  <li>See <a href="http://linux.die.net/man/1/rsync">rsync man</a></li>
+</ul>
+
+<p>This is a more comprehensive script that sends an email with success/fail messages. This could be added to a nightly cronjob. It would be better if it looped through the servers:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+<span class="c">#</span>
+<span class="c"># Collect all of the backups!</span>
+<span class="c">#</span>
+<span class="c">#</span>
+
+<span class="c"># Server 1 Backup</span>
+<span class="c"># ------------------------------------------------------------------------------</span>
+rsync -aqz -H -e <span class="s2">"ssh -p 22222"</span> backupuser@111.111.111.111:/ /home/david/server-1 2&gt; /home/david/server-1-rsync.err
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -gt 0 <span class="o">]]</span>
+  <span class="k">then</span>
+
+    <span class="c"># Server 1 errors</span>
+    <span class="c"># ----------------------------------------------------------------------------</span>
+    <span class="nv">SERVER_1_MSG</span><span class="o">=</span><span class="nb">false
+    echo</span> <span class="s2">"There was an error in the nightly backup for Server 1 to the backup server: </span><span class="k">${</span><span class="nv">TIMESTAMP</span><span class="k">}</span><span class="s2">"</span>| mail -s <span class="s2">"Backup Error, Server 1 to Backup"</span> info@example.com
+
+  <span class="k">else</span>
+
+    <span class="c"># Server 1 success</span>
+    <span class="c"># --------------------------------------------------------------------------</span>
+    <span class="nv">SERVER_1_MSG</span><span class="o">=</span><span class="s2">"rsync was successful for Server 1"</span>
+
+<span class="k">fi</span>
+
+<span class="c"># Server 2 Backup</span>
+<span class="c"># ------------------------------------------------------------------------------</span>
+rsync -aqz -H -e <span class="s2">"ssh -p 22222"</span> backupuser@222.222.222.222:/ /home/david/server-2 2&gt; /home/david/server-2-rsync.err
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -gt 0 <span class="o">]]</span>
+  <span class="k">then</span>
+
+    <span class="c"># Server 2 errors</span>
+    <span class="c"># ----------------------------------------------------------------------------</span>
+    <span class="nv">SERVER_2_MSG</span><span class="o">=</span><span class="nb">false
+    echo</span> <span class="s2">"There was an error in the nightly backup for Server 2 to the backup server: </span><span class="k">${</span><span class="nv">TIMESTAMP</span><span class="k">}</span><span class="s2">"</span>| mail -s <span class="s2">"Backup Error, Server 2 to Backup"</span> info@example.com
+
+  <span class="k">else</span>
+
+    <span class="c"># Server 2 success</span>
+    <span class="c"># --------------------------------------------------------------------------</span>
+    <span class="nv">SERVER_2_MSG</span><span class="o">=</span><span class="s2">"rsync was successful for Server 2"</span>
+
+<span class="k">fi
+
+
+</span><span class="nv">REPORT</span><span class="o">=</span><span class="s2">"Backup Report, </span><span class="k">${</span><span class="nv">TIMESTAMP</span><span class="k">}</span><span class="s2">
+===========================================
+</span><span class="nv">$SERVER_1_MSG</span><span class="s2">
+</span><span class="nv">$SERVER_2_MSG</span><span class="s2">
+"</span>
+
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$REPORT</span><span class="s2">"</span>| mail -s <span class="s2">"Backup Status"</span> info@example.com</code></pre></figure>
+
+<h2 id="problems-with-permissions">Problems with Permissions</h2>
+<p>Some files that you’re backing up may have restrictive permissions. For example, permissions on WordPress configuration file (<code class="highlighter-rouge">wp-config.php</code>) may be set to 660 - read/write for owner, read/write for group, and no privilege for others. Most files will have permission set to 644.</p>
+
+<p>Because your backup server is logging in as the backup user on the production server, it won’t have read privilege on the files with 660 permission. Trying to rsync these will result in a permission error.</p>
+
+<p>To prevent this, add the <strong>production server’s</strong> backup user to the file’s group - typically <code class="highlighter-rouge">www-data</code>:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Production server: server that is being backed up</span>
+<span class="c"># Add backup user to the group</span>
+usermod -a -G www-data backupuser</code></pre></figure>
+
+<p>This will allow the backup server to log in as the backup user and copy files.</p>
+
+<h2 id="resources">Resources</h2>
+<ul>
+  <li><a href="http://www.guyrutenberg.com/2014/01/14/restricting-ssh-access-to-rsync/">http://www.guyrutenberg.com/2014/01/14/restricting-ssh-access-to-rsync/</a></li>
+  <li><a href="https://www.debian-administration.org/users/lee/weblog/40">https://www.debian-administration.org/users/lee/weblog/40</a></li>
+  <li><a href="http://positon.org/rsync-command-restriction-over-ssh">http://positon.org/rsync-command-restriction-over-ssh</a></li>
+  <li><a href="http://surniaulula.com/2014/02/21/force-rsync-command-via-ssh-but-allow-any-directory/">http://surniaulula.com/2014/02/21/force-rsync-command-via-ssh-but-allow-any-directory/</a></li>
+  <li><a href="http://ramblings.narrabilis.com/using-rsync-with-ssh">http://ramblings.narrabilis.com/using-rsync-with-ssh</a></li>
+</ul>
+
+    </div>
+
+  
+    <ul class="tag_box inline">
+      <li><i class="glyphicon-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/categories.html#Linux-ref">
+    		Linux <span>3</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#Backup-ref">
+    		Backup <span>1</span>
+    	</a></li>
+     
+    	<li><a href="/categories.html#rsync-ref">
+    		rsync <span>1</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+    
+  
+    <hr>
+    <ul class="pagination">
+    
+      <li class="prev"><a href="/mysql/mariadb/2016/08/07/export-mysql-users" title="Export MySQL Users">&laquo; Previous</a></li>
+    
+      <li><a href="/archive.html">Archive</a></li>
+    
+      <li class="next"><a href="/jekyll/liquid/2016/08/10/page-sections-in-jekyll-seperating-content-from-layout" title="Page Sections in Jekyll - Seperating Content from Layout">Next &raquo;</a></li>
+    
+    </ul>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'davidcwgitblog'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+
+    </div>
+
+    <div id="footer">
+      <div class="container">
+        <p>&copy; 2016 David Egan
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </div>
+    </div id="footer">
+
+    
+
+
+    <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/assets/themes/bootstrap-3/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
